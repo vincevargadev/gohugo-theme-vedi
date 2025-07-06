@@ -1,4 +1,4 @@
-module github.com/sergeyklay/gohugo-theme-ed
+module github.com/vincevargadev/gohugo-theme-vedi
 
 go 1.18
 
