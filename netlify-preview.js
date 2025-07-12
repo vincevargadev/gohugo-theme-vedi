@@ -33,10 +33,10 @@ fs.readFile(path.resolve(__dirname, netlifyConfig), 'utf8', (err, data) => {
     // <- frame-src giscus.app app.netlify.com;
     line = line.replace(/(frame-src) (giscus\.app)(;)/, '$1 $2 app.netlify.com$3');
 
-    // -> script-src 'self' www.googletagmanager.com giscus.app;
-    // <- script-src 'self' www.googletagmanager.com giscus.app netlify-cdp-loader.netlify.app;
+    // -> script-src 'self' giscus.app;
+    // <- script-src 'self' giscus.app netlify-cdp-loader.netlify.app;
     line = line.replace(
-      /(script-src) ('self' www\.googletagmanager\.com giscus\.app)(;)/,
+      /(script-src) ('self' giscus\.app)(;)/,
       '$1 $2 netlify-cdp-loader.netlify.app$3'
     );
 

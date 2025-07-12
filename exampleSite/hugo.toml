@@ -136,14 +136,6 @@ refLinksErrorLevel = 'WARNING'
       inputPosition = 'bottom'
       lang = 'en'
 
-  [params.privacy]
-    [params.privacy.googleTagManager]
-      disable = false
-      respectDoNotTrack = true
-
-  [params.services]
-    [params.services.googleTagManager]
-      id = 'GTM-W8D5W642'
 
 [languages]
   [languages.en]
