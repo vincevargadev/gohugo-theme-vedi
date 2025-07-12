@@ -41,5 +41,4 @@ resources/_gen/** linguist-generated
 .gitattributes     export-ignore
 .gitignore         export-ignore
 eslint.config.js   export-ignore
-netlify-preview.js export-ignore
-netlify.toml       export-ignore
+

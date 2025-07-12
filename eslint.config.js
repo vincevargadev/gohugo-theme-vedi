@@ -114,7 +114,7 @@ module.exports = [
     }
   },
   {
-    files: ['netlify-preview.js'],
+
     rules: {
       // allow use of console
       'no-console': 'off'
