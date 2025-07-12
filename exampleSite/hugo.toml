@@ -113,30 +113,6 @@ refLinksErrorLevel = 'WARNING'
     # For more see: https://lunrjs.com/guides/language_support.html
     languages = ['en', 'es']
 
-  [params.comments]
-    enable = false
-    type = 'giscus'
-
-    # Configure giscus comments.
-    #
-    # For more see: https://giscus.app/
-    [params.comments.giscus]
-      # Required parameters:
-      repo = 'sergeyklay/gohugo-theme-ed'
-      repoId = 'R_kgDOHEYacw'
-      category = 'General'
-      categoryId = 'DIC_kwDOHEYac84Cerse'
-
-      # Optional parameters:
-      theme = 'light'
-      mapping = 'pathname'
-      strict = 0
-      reactionsEnabled = 1
-      emitMetadata = 0
-      inputPosition = 'bottom'
-      lang = 'en'
-
-
 [languages]
   [languages.en]
     languageCode = 'en'
