@@ -46,7 +46,7 @@ for you, Kindle!
 - Metadata in OpenGraph to play nice with social media and search engines
 - Automatic table of content generation
 - Simple search functionality
-- Annotations via {{< link src="https://hypothes.is/" class="external" target="_blank" hreflang="en" rel="noopener noreferrer" >}}hypothes.is{{< /link >}}
+
 - Contact form
 - Custom `robots.txt` (changes values based on environment)
 - RSS/Atom/Json Feeds Discovery

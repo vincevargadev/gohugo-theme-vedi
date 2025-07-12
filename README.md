@@ -33,7 +33,7 @@ theme by [Alex Gil](https://twitter.com/elotroalex).
 - Automatic table of content generation
 - Simple search functionality
 - Comments system
-- Annotations via [hypothes.is](https://hypothes.is/)
+
 - Contact form
 - Custom `robots.txt` (changes values based on environment)
 - RSS/Atom/Json Feeds Discovery
