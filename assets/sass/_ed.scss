@@ -363,6 +363,9 @@ a.sidebar-nav-item:focus {
   background-color: #fff;
   border-radius: .25rem;
   cursor: pointer;
+  &:focus {
+    outline: auto;
+  }
 }
 
 .sidebar-toggle:before {

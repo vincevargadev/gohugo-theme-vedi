@@ -13,8 +13,21 @@ function setupBackToTop() {
   }
 }
 
+function setupHamburgerMenuKeyboardToggle() {
+  const sidebarToggleLabel = document.querySelector('label[for="sidebar-checkbox"]');
+  const sidebarCheckbox = document.getElementById('sidebar-checkbox');
 
+  if (sidebarToggleLabel && sidebarCheckbox) {
+    sidebarToggleLabel.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        sidebarCheckbox.checked = !sidebarCheckbox.checked;
+      }
+    });
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   setupBackToTop();
+  setupHamburgerMenuKeyboardToggle();
 });
