@@ -99,21 +99,6 @@ module.exports = [
     }
   },
   {
-    files: ['tests/*.spec.js', 'eslint.config.js', 'playwright.config.js'],
-    languageOptions: {
-      'sourceType': 'commonjs'
-    }
-  },
-  {
-    files: ['playwright.config.js'],
-    languageOptions: {
-      globals: {
-        // Browser global variables
-        ...globals.node
-      }
-    }
-  },
-  {
 
     rules: {
       // allow use of console
