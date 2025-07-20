@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove Playwright
 - Remove tests folder
 - Remove .github folder
+- Remove all themes except red
 
 ## [Unreleased](https://github.com/sergeyklay/gohugo-theme-ed/compare/v0.8.0...HEAD)
 
