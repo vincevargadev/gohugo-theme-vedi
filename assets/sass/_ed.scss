@@ -700,23 +700,14 @@ li.prose-indent {
   text-indent: 2rem;
 }
 
-
-/*
-  Themes
-
-  Applies custom color schemes by adding the appropriate class to the `body`. Based on colors from
-  Base16: http://chriskempson.com/projects/base16/
-*/
-
-/* Red */
-.theme-base-red .sidebar,
-.theme-base-red .sidebar-toggle:active,
-.theme-base-red #sidebar-checkbox:checked ~ .sidebar-toggle {
+.sidebar,
+.sidebar-toggle:active,
+#sidebar-checkbox:checked ~ .sidebar-toggle {
   background-color: #ac4142;
 }
 
-.theme-base-red .container a,
-.theme-base-red .sidebar-toggle,
-.theme-base-red .related-posts li a:hover {
+.container a,
+.sidebar-toggle,
+.related-posts li a:hover {
   color: #ac4142;
 }
