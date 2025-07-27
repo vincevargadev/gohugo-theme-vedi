@@ -1,4 +1,3 @@
-// 'Back to top' logic
 function setupBackToTop() {
   const intersectionObserver = new IntersectionObserver(function(entries) {
     const topBtn = document.querySelector('.top-of-site-link');
