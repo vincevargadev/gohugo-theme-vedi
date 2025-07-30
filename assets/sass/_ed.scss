@@ -212,6 +212,16 @@ tbody tr:nth-child(odd) th {
   padding-top: 26px;
   padding-bottom: 1rem;
   text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+main#main {
+  padding-top: 70px;
 }
 
 .masthead-title {

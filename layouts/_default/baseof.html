@@ -15,6 +15,7 @@
         {{ end }}
         <div class="wrap">
             <header class="masthead">
+                <label for="sidebar-checkbox" class="sidebar-toggle" tabindex="1"></label>
                 <div class="container">
                     <h3 class="masthead-title">
                         <a href="{{ site.Home.RelPermalink }}" title="{{ i18n "home" }}">{{ site.Title }}</a>
@@ -27,8 +28,6 @@
                 {{ block "main" . }}{{ end }}
             </main>
         </div>
-
-        <label for="sidebar-checkbox" class="sidebar-toggle" tabindex="1"></label>
 
         <a href="#top-of-site" class="top-of-site-link" data-visible="false">
             <span class="screen-reader-text" aria-label="{{ i18n "back_to_top_label" }}">
