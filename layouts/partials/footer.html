@@ -1,5 +1,5 @@
 {{- if or site.Params.footer .Params.editor }}
-    <div class="sidebar-item">
+    <div class="sidebar-item footer">
         <p>
             {{- with site.Params.footer -}}
                 {{- $footerText := replace . "{year}" now.Year -}}

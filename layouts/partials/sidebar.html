@@ -4,8 +4,14 @@
 
 {{/* Toggleable sidebar */}}
 <aside class="sidebar" id="sidebar">
-    <div class="sidebar-item">
-        <p>{{ site.Params.Description }}</p>
+    <div class="sidebar-item sidebar-image">
+        <img src="{{site.Params.SidebarImage}}">
+    </div>
+    <div class="sidebar-item sidebar-intro">
+        <p>{{ site.Params.SidebarIntro }}</p>
+    </div>
+    <div class="sidebar-item sidebar-tagline">
+        <p>{{ site.Params.SidebarTagline}}</p>
     </div>
 
     <nav class="sidebar-nav">
