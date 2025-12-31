@@ -1,26 +1,1527 @@
-/*
-  Common Variables
-
-  Feel free to change!
-*/
-
-/* Fonts */
+// Are these still used?
 $main-font: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 $heading-font: sans-serif;
 $regular-font-size: 1.25em; /* 20px / 16px = 1.25em; support text resizing in all browsers */
-
-
-/*
-  Color
-
-  Make sure to leave `colorScheme` in `params.yaml` file empty for granular control
-*/
 $text-light-color: #676767;
 $text-color: #454545;
 $heading-color: #404040;
 $link-color: #841212;
 
-// - - - - - - - - - - Global styles
-@import "ed";
-@import "syntax";
-@import "form-elements";
+// - - - - - - - - - - - - - - - - - -
+// Mixins
+// - - - - - - - - - - - - - - - - - -
+
+// iPhone min device width cheat sheet:
+//
+// iPhone 4 and 4S: 320px
+// iPhone 5, 5S, 5C and 5SE: 320px
+// iPhone 6, 6S, 7 and 8: 375px
+// iPhone 6+, 7+ and 8+: 414px
+// iPhone X: 375px
+$break-phonem: 320px;
+$break-phonel: 480px;
+$break-tabletp: 768px;
+$break-tabletl: 1024px;
+$break-laptop: 1220px;
+$break-desktop: 1600px;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Responsive
+// Usage: @include mq(tabletp) {}
+@mixin mq($media) {
+  @if $media == phonem {
+    @media only screen and (min-width: $break-phonem) { @content; }
+  }
+  @else if $media == phonel {
+    @media only screen and (min-width: $break-phonel) { @content; }
+  }
+  @else if $media == tabletp {
+    @media only screen and (min-width: $break-tabletp) { @content; }
+  }
+  @else if $media == tabletl {
+    @media only screen and (min-width: $break-tabletl) { @content; }
+  }
+  @else if $media == laptop {
+    @media only screen and (min-width: $break-laptop) { @content; }
+  }
+  @else if $media == desktop {
+    @media only screen and (min-width: $break-desktop) { @content; }
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  text-size-adjust
+// Controls the text inflation algorithm used on some smartphones and tablets.
+// Other browsers will ignore this property.
+//
+// Usage: @include text-size-adjust(none);
+
+@mixin text-size-adjust($value) {
+  -webkit-text-size-adjust: $value;
+     -moz-text-size-adjust: $value;
+      -ms-text-size-adjust: $value;
+          text-size-adjust: $value;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Transform
+// Usage: @include transform(
+//             rotate(90deg),
+//             scale(0.5),
+//             // ... add more transforms if you need
+//        );
+//
+
+@mixin transform($transforms...) {
+  // combine the passed transforms into a space separated list
+  $transform-list: join($transforms, null, space);
+
+  // print out the transforms
+  -webkit-transform: $transform-list;
+     -moz-transform: $transform-list;
+      -ms-transform: $transform-list;
+       -o-transform: $transform-list;
+          transform: $transform-list;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Transitions
+// Usage: @include transition(color .3s ease);
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+     -moz-transition: $args;
+      -ms-transition: $args;
+       -o-transition: $args;
+          transition: $args;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Appearance
+// Used to display an element using platform-native styling based
+// on the operating system's theme.
+//
+// Usage: @include appearance(button);
+
+@mixin appearance($value) {
+  -webkit-appearance: $value;
+     -moz-appearance: $value;
+          appearance: $value;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Placeholder
+// Style the placeholder text of a form element.
+//
+// Usage: @include input-placeholder(#ABB7B7, 15%);
+
+@mixin input-placeholder($color, $alpha) {
+  ::-webkit-input-placeholder {
+    color: lighten($color, $alpha);
+  }
+
+  ::-moz-placeholder {
+    color: lighten($color, $alpha);
+  }
+
+  :-ms-input-placeholder {
+    color: lighten($color, $alpha);
+  }
+
+  :-moz-placeholder {
+    color: lighten($color, $alpha);
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Box Sizing
+// Sets how the total width and height of an element is calculated.
+//
+// Usage: @include box-sizing(border-box);
+
+@mixin box-sizing ($value) {
+  -webkit-box-sizing: $value;
+     -moz-box-sizing: $value;
+          box-sizing: $value;
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Box Shadow
+//
+// Usage: @include box-shadow(0 0 2px 1px #e21a23!important);
+
+@mixin box-shadow ($args...) {
+  -webkit-box-shadow: $args;
+     -moz-box-shadow: $args;
+          box-shadow: $args;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Border Radius
+//
+// Usage: @include border-radius(10% 30% 50% 70%);
+
+@mixin border-radius ($args...) {
+  -webkit-border-radius: $args;
+     -moz-border-radius: $args;
+          border-radius: $args;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Flex Wrap
+// Sets whether flex items are forced onto one line or can wrap onto
+// multiple lines.
+//
+// Usage: @include flex-wrap(wrap);
+
+@mixin flex-wrap ($value) {
+  -webkit-flex-wrap: $value;
+      -ms-flex-wrap: $value;
+          flex-wrap: $value;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - Box Decoration Break
+// Specifies how an element's fragments should be rendered when broken across
+// multiple lines, columns, or pages.
+//
+// Usage: @include box-decoration-break(clone);
+
+@mixin box-decoration-break ($value) {
+  -webkit-box-decoration-break: $value;
+      -ms-box-decoration-break: $value;
+          box-decoration-break: $value;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Mask
+
+
+// Usage: @include mask-image(url("/img/external-link.svg"));
+
+@mixin mask-image($value) {
+  -webkit-mask-image: $value;
+          mask-image: $value;
+}
+
+// Usage: @include mask-size(cover);
+
+@mixin mask-size($value) {
+  -webkit-mask-size: $value;
+          mask-size: $value;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Filter
+// Applies graphical effects like blur or color shift to an element.
+//
+// Usage: @include filter(drop-shadow(0 2px 5px rgba(0, 0, 0, .3)));
+
+@mixin filter($value) {
+  -webkit-filter: $value;
+     -moz-filter: $value;
+       -o-filter: $value;
+          filter: $value;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - clip-path
+// Create a clipping region that sets what part of an element should be shown.
+//
+// Usage: @include clip-path(
+//             padding-box,
+//             circle(50px at 0 100px),
+//             // ...
+//        );
+
+@mixin clip-path($clip-list...) {
+  // combine the passed transforms into a space separated list
+  $clip-list: join($clip-list, null, space);
+
+  -webkit-clip-path: $clip-list;
+     -moz-clip-path: $clip-list;
+      -ms-clip-path: $clip-list;
+          clip-path: $clip-list;
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - visually-hidden
+// Visually hides text content for accessibility. This text should
+// only be visible to screen reader users.
+//
+// Usage: @include visually-hidden();
+
+@mixin visually-hidden {
+  // Outside the DOM flow
+  position: absolute !important;
+  // Do not wrap content
+  white-space: nowrap;
+  // Hide borders
+  border: 0;
+  // Nearly collapsed
+  height: 1px;
+  width: 1px;
+  // Remove padding / margin
+  padding: 0;
+  margin: -1px;
+  // Do not allow overflow
+  overflow: hidden;
+  // Hide the 1px x 1px element completely
+  // - clip: old browsers
+  // - clip-path: modern browsers
+  clip: rect(1px, 1px, 1px, 1px);
+  @include clip-path(inset(50%));
+}
+
+
+* {
+  @include box-sizing(border-box);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+html {
+  font-family: $main-font;
+  font-size: 1em; /* 16px; specify in ems to support text resizing in all browsers */
+  line-height: 1.5;
+}
+
+@media (min-width: 38em) {
+  html {
+    font-size: $regular-font-size;
+  }
+}
+
+body {
+  color: $text-color;
+  background-color: #fff;
+  @include text-size-adjust(100%);
+}
+
+.content {
+  margin-bottom: 4rem;
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+.container {
+  max-width: 32rem;
+  padding-left:  1rem;
+  padding-right: 1rem;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+@media (min-width: 56em) {
+  .container {
+    max-width: 38rem;
+  }
+}
+
+a, .text-title a {
+  color: $link-color;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-font;
+  margin-bottom: .5rem;
+  font-weight: normal;
+  color: $heading-color;
+  letter-spacing: -.025rem;
+  line-height: 1.25;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h1.text-title {
+  font-size: 1.4rem;
+}
+
+h2 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+h3, h4, h5, h6 {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: circle;
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+hr {
+  position: relative;
+  margin: 1.5rem 0;
+  border: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #fff;
+}
+
+mark {
+  color: white;
+  background-color: $link-color;
+}
+
+blockquote {
+  padding: 0rem 1.5rem 0rem 2rem;
+  margin: 0 0 20px 0;
+  color: $text-color;
+  border-left: none;
+  font-style: italic;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 30em) {
+  blockquote {
+    padding-right: 5rem;
+    padding-left: 1.25rem;
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 0 1rem;
+  border-radius: 5px;
+}
+
+table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+
+tbody tr:nth-child(odd) td,
+tbody tr:nth-child(odd) th {
+  background-color: #f9f9f9;
+}
+
+.masthead {
+  border-bottom: 0.5px solid #eee;
+  padding-top: calc(20px + env(safe-area-inset-top));
+  padding-bottom: 8px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  backdrop-filter: blur(6px);
+ }
+
+main#main {
+  padding-top: 110px;
+}
+
+.masthead-title {
+  color: #505050;
+  font-family: $main-font;
+  font-size: 1.8rem;
+  line-height: .777em;
+  margin: 2em 0 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.masthead-title img {
+  display: inline-block;
+  height: 40px;
+  margin-bottom: 0px;
+  border-radius: 50%;
+  margin-right: 14px;
+  opacity: 1;
+  @include transition(opacity .15s ease-in-out);
+}
+
+.masthead-title small {
+  color: $text-color;
+  display: none; /* This is an accessibility no-no */
+  font-family: $heading-font;
+  font-size: .88rem;
+  font-weight: normal;
+  letter-spacing: .05rem;
+}
+
+@media (min-width: 320px) {
+  .masthead-title {
+    margin-top: 2px;
+    margin-right: 15%;
+    margin-left: 15%;
+  }
+}
+
+@media (min-width: 48em) {
+  .masthead-title small {
+    display: inline;
+  }
+}
+
+/*
+  Sidebar
+
+  The sidebar is the drawer, the item we are toggling with our handy hamburger button in the corner
+  of the page.
+
+  This particular sidebar implementation was inspired by Chris Coyier's "Offcanvas Menu with CSS
+  Target" article, and the checkbox variation from the comments by a reader. It modifies both
+  implementations to continue using the checkbox (no change in URL means no polluted browser
+  history), but this uses `position` for the menu to avoid some potential content reflow issues.
+
+  Source: http://css-tricks.com/off-canvas-menu-with-css-target/#comment-207504
+*/
+
+.sidebar {
+  left: -16rem;
+  width: 16rem;
+  visibility: hidden;
+  overflow-y: auto;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-size: .875rem;/* 15px*/
+  color: #313131;
+  border-right: .5px solid #d6d6d6;
+  background-color: #202020;
+  @include transition(all .15s ease-in-out);
+  padding-top: env(safe-area-inset-top);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  background: rgba(1, 1, 1, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.sidebar .footer {
+  margin-top: auto;
+}
+
+@media (min-width: 30em) {
+  .sidebar {
+    font-size: .75rem;  
+  }
+}
+
+.sidebar {
+  background-color: $link-color;
+}
+
+.sidebar a {
+  font-weight: 600;
+  color: #9b0001;
+}
+
+.sidebar-item {
+  padding: 1rem;
+}
+
+.sidebar-image img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+.sidebar-item.sidebar-intro, .sidebar-item.sidebar-tagline {
+  padding: 0rem 1rem 0.8rem 1rem;
+}
+.sidebar-intro {
+  font-style: italic;
+}
+
+.sidebar-item p:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-nav {
+  border-bottom: 0.5px solid rgba(255,255,255,.1);
+}
+
+.sidebar-nav-item {
+  display: block;
+  padding: .5rem 1rem;
+  border-top: 0.5px solid rgba(255,255,255,.1);
+}
+
+a.sidebar-nav-item-toc {
+  color: rgba(255,255,255,.8);
+}
+
+.sidebar-nav-item.active,
+a.sidebar-nav-item:hover,
+a.sidebar-nav-item:focus {
+  text-decoration: none;
+  background-color: rgba(255,255,255,.1);
+  border-color: transparent;
+}
+
+@media (min-width: 48em) {
+  .sidebar-item {
+    padding: 1.5rem;
+  }
+
+  .sidebar-nav-item {
+    padding-left:  1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.sidebar-checkbox {
+  margin-top: env(safe-area-inset-top);
+  display: none;
+}
+
+.sidebar-toggle {
+  top:  calc(.8rem + env(safe-area-inset-top));
+  left: 1rem;
+  display: block;
+  padding: .25rem .75rem;
+  color: #505050;
+  background-color: #fff;
+  border-radius: .25rem;
+  cursor: pointer;
+  position: fixed;
+  z-index: 400;
+  &:focus {
+    outline: auto;
+  }
+}
+
+.sidebar-toggle:before {
+  z-index: 300;
+}
+
+.sidebar-toggle:before {
+  display: inline-block;
+  width: 1rem;
+  height: .75rem;
+  content: "";
+  background-image: linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
+}
+
+.sidebar-toggle:active,
+#sidebar-checkbox:focus ~ .sidebar-toggle,
+#sidebar-checkbox:checked ~ .sidebar-toggle {
+  color: #fff;
+  background-color: #555;
+}
+
+.sidebar-toggle:active:before,
+#sidebar-checkbox:focus ~ .sidebar-toggle:before,
+#sidebar-checkbox:checked ~ .sidebar-toggle:before {
+  background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
+}
+
+@media (min-width: 30.1em) {
+  .sidebar-toggle {
+    position: fixed;
+  }
+}
+
+@media print {
+  .sidebar-toggle {
+    display: none;
+  }
+}
+
+
+/*
+  Slide effect
+
+  Handle the sliding effects of the sidebar and content in one spot, separate from the default
+  styles.
+
+  As a heads-up, we don't use `transform: translate3d()` here because, when mixed with
+  `position: fixed;` for the sidebar toggle, it creates a new containing block. Put simply, the
+  fixed sidebar toggle behaves like `position: absolute;` when transformed.
+
+  Read more about it at http://meyerweb.com/eric/thoughts/2011/09/12/.
+*/
+
+
+#sidebar-checkbox:checked + .sidebar {
+  /* z-index: 10; */
+  visibility: visible;
+}
+
+#sidebar-checkbox:checked ~ .sidebar {
+  @include transform(translateX(16rem));
+}
+
+#sidebar-checkbox:checked ~ .wrap .masthead-title img {
+  opacity: 0;
+}
+
+.layout-reverse #sidebar-checkbox:checked ~ .sidebar {
+  @include transform(translateX(-16rem));
+}
+
+.sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
+  @include transform(translateX(0));
+}
+
+.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar-toggle {
+  box-shadow: 0 0 0 .25rem #fff;
+}
+
+.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
+  box-shadow: .25rem 0 .5rem rgba(0,0,0,.1);
+}
+
+.text-center {
+  text-align: center!important;
+}
+
+.text-uppercase {
+  text-transform: uppercase!important;
+}
+
+.fs-4 {
+  font-size: 1.6rem!important;
+}
+
+.fs-5 {
+  font-size: 1.4rem!important;
+}
+
+.fs-7 {
+  font-size: 0.8rem!important;
+}
+
+div.poem,
+.poem,
+div.narrative,
+.narrative {
+  margin-bottom: 5rem;
+}
+
+div.toc {
+  margin-bottom: 4rem;
+}
+
+
+/*
+  Poem styles
+
+  If you want your lines not to wrap on small screens, add the rule "white-space: nowrap;"; If you
+  want you want to remove the hanging indent, reset the padding-left to 0 and erase text-indent
+*/
+
+.poem ul,
+.poetry ul,
+ul.poetry {
+  list-style: none;
+  list-style-type: none;
+  padding-left: 1rem;
+  text-indent: -1rem;
+}
+
+
+/* This snippet helps us reset the margin for all spans with the indent- class */
+.poem span[class^='indent-'],
+.poetry span[class^='indent-'] {
+  margin: 0;/* reset browsers default margin styles*/
+}
+
+
+/*
+  To set line indentation for poetry wrap the line in a span with a class="indent-x" attribute.
+  The x is represents a rem (root em) value
+*/
+
+.indent-1 {
+  padding-left: 1rem;
+}
+
+.indent-2 {
+  padding-left: 2rem;
+}
+
+.indent-3 {
+  padding-left: 3rem;
+}
+
+.indent-4 {
+  padding-left: 4rem;
+}
+
+.indent-5 {
+  padding-left: 5rem;
+}
+
+.indent-6 {
+  padding-left: 6rem;
+}
+
+.indent-7 {
+  padding-left: 7rem;
+}
+
+.indent-8 {
+  padding-left: 8rem;
+}
+
+.indent-9 {
+  padding-left: 9rem;
+}
+
+.indent-10 {
+  padding-left: 10rem;
+}
+
+.poem .byline,
+.poetry .byline {
+  font-style: italic;
+  font-weight: normal;
+  letter-spacing: 0;
+  margin-top: -.5rem;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+.footnotes {
+  line-height: 1.2rem;
+  font-size: 0.9rem;
+  letter-spacing: .01rem;
+}
+
+.footnotes .foot-block {
+  display: inline-block;
+  padding: 0 4rem 0 2rem;
+  margin-bottom: .8rem;
+  font-style: italic;
+}
+
+a.footnote-ref {
+  padding-left: .1rem;
+  font-size: .66rem;
+}
+
+ol.bibliography {
+  list-style-type:none;
+  padding-left: 1rem;
+  text-indent: -1rem;
+}
+
+ins,
+.add {
+  color:#288828;
+  font-style: italic;
+}
+
+del,
+.delete {
+  text-decoration: line-through;
+  color: #AA3232;
+}
+
+u,
+.underline {
+  text-decoration: underline;
+}
+
+
+/*
+  Line layouts for prose-poetry and theater
+
+  To use these layouts you need to add the classes to your markdown or HTML lines.
+*/
+
+li.speaker,
+li.speakerGroup {
+  text-align: center;
+  padding-top: 1.2em;
+}
+
+li.speakerGroup {
+  margin-bottom: -1.6em;
+}
+
+/* To add an attribution, make sure to make a line with the attribution class */
+
+li.attribution {
+  text-align: right;
+  list-style: none;
+  padding: 0rem 1.5rem 0rem 2rem;
+  margin: 0 0 20px 0;
+  color: #454545;
+}
+
+li.prose {
+  list-style-position: inside;
+  margin-left: -1em;
+  text-indent: 0;
+}
+
+li.prose-indent {
+  text-indent: 2rem;
+}
+
+.sidebar {
+  background-color: #f9f9f9;
+}
+
+.sidebar-toggle:active,
+#sidebar-checkbox:checked ~ .sidebar-toggle {
+  background-color: #ac4142;
+}
+
+.post-meta {
+  margin-bottom: 0;
+  font-size: .85rem;
+  color: $text-light-color;
+}
+
+.container a,
+.sidebar-toggle,
+.related-posts li a:hover {
+  color: #ac4142;
+}
+
+.masthead-title a {
+  font-family: sans-serif;
+  letter-spacing: -3px;
+  font-weight: 900;
+  color: black;
+  -webkit-text-stroke: 2px white;
+  // Without this, the text stroke looks off...
+  paint-order: stroke fill;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #030303;
+    color-scheme: dark;
+  }
+
+  body {
+    color: #dcdcdc;
+    background-color: #030303;
+    color-scheme: dark;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #f8f8f8;
+  }
+
+  .post-meta {
+    color: #ededed;
+  }
+
+  .masthead-title small {
+    color: #ffffff;
+  }
+
+  .masthead-title a:hover {
+    text-decoration: none;
+  }
+
+  .masthead {
+    border-bottom: .5px solid #2c2c2c;
+  }
+
+  .sidebar {
+    background: rgba(0, 0, 0, 0.5);
+    color: #ececec;
+    border-right: .5px solid #2c2c2c;
+  }
+
+  .container a, .sidebar-toggle, .related-posts li a:hover {
+    color: #ec494b;
+  }
+
+  .sidebar a {
+    color: #ff4142;
+    font-weight: 400;
+  }
+
+  .sidebar-toggle:active, #sidebar-checkbox:checked~.sidebar-toggle {
+    background-color: #a73031;
+  }
+
+  .sidebar-toggle {
+    background-color: #592424;
+  }
+
+  .sidebar-toggle:before {
+    background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
+    z-index: 300;
+  }
+
+  pre.chroma, pre, code {
+    background-color: #1e1e1e !important;
+  }
+
+  // Mermaid diagrams only work with light background...
+  pre.mermaid {
+    background-color: #f9f9f9 !important;
+  }
+
+  .masthead-title a {
+    color: white;
+    -webkit-text-stroke: 2px #060606;
+  }
+}
+
+template {
+  // IE support for HTML5 <template> tag
+  display: none;
+}
+
+.masthead-title small {
+  font-size: .78rem;
+}
+
+#page-contact,
+#page-thanks,
+.introduction {
+  min-height: 40px;
+  margin-bottom: 40px;
+
+  @include mq(tabletp) {
+    min-height: 60px;
+    margin-bottom: 60px;
+  }
+
+  @include mq(tabletl) {
+    min-height: 80px;
+    margin-bottom: 80px;
+  }
+
+  @include mq(laptop) {
+    min-height: 100px;
+    margin-bottom: 100px;
+  }
+}
+
+.introduction {
+  h1.accent {
+    margin: 30px 0;
+    font-size: 4em;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+}
+
+#page-contact .container,
+#page-thanks .container,
+.introduction .container {
+  margin: 10px auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+.post {
+  margin-top: 40px;
+
+  @include mq(tabletp) {
+    margin-top: 60px;
+  }
+
+  @include mq(tabletl) {
+    margin-top: 80px;
+  }
+
+  @include mq(laptop) {
+    margin-top: 100px;
+  }
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+#TableOfContents ul ul,
+#TableOfContents ul ul ul,
+#TableOfContents ul ul ul ul,
+#TableOfContents ul ul ul ul ul,
+#TableOfContents ul ul ul ul ul ul,
+#TableOfContents ul ul ul ul ul ul ul {
+  margin-bottom: 0;
+}
+
+
+.post .byline {
+  font-style: italic;
+  font-weight: normal;
+  letter-spacing: 0;
+  margin-top: -.5rem;
+}
+
+.post .byline,
+.poem .byline,
+.poetry .byline {
+  margin-bottom: 1rem;
+}
+
+nav.pagination {
+  justify-content: center;
+}
+
+ul.pager {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: inline;
+    padding: 10px;
+    margin: 5px;
+  }
+}
+
+.divider {
+  position: relative;
+  margin: 2.5rem 0;
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.footnotes  {
+  hr {
+    margin: 0;
+    border: 0;
+  }
+
+  blockquote + a.footnote-backref {
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+}
+
+.tags-wrapper {
+  position: relative;
+}
+
+.post-tags {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 24px;
+  bottom: -12px;
+  list-style: none;
+  text-indent: unset;
+
+  li, a {
+    font-family: $heading-font;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    font-size: .75em;
+  }
+
+  a {
+    margin-left: 20px;
+    padding: 0 10px 0 12px;
+    background: $link-color;
+    color: #fff;
+    text-decoration: none;
+
+    @include border-radius(0 4px 4px 0);
+
+    &:before {
+      content: "";
+      float: left;
+      position: absolute;
+      top: 0;
+      left: -12px;
+      width: 0;
+      height: 0;
+      border-color: transparent $link-color transparent transparent;
+      border-style: solid;
+      border-width: 12px 12px 12px 0;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 0;
+      float: left;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+
+      @include border-radius(2px);
+      @include box-shadow(-1px -1px 2px $text-color);
+    }
+
+    &:hover {
+      background: $text-light-color;
+    }
+
+    &:hover:before {
+      border-color: transparent $text-light-color transparent transparent;
+    }
+  }
+}
+
+a.external {
+  &:after {
+    background-color: #ac4142;
+    content: "";
+    display: inline-flex;
+    height: 10px;
+    margin-left: 4px;
+    width: 10px;
+
+    @include mask-size(cover);
+    @include mask-image(url("/img/external-link.svg"));
+  }
+}
+
+ul.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 960px;
+  margin: auto;
+  padding: 2rem 0 1rem;
+  list-style: none;
+  border: 2px solid white;
+  border-radius: 5px;
+
+  .tag {
+    display: flex;
+    align-items: center;
+    margin: 0.25rem 1rem;
+  }
+
+  .tag-link {
+    padding: 5px 5px 0;
+    @include transition(0.15s);
+  }
+}
+
+#top-of-site-anchor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  top: 500px;
+  left: 0;
+}
+
+@media (max-width: 800px){
+  #top-of-site-anchor {
+    top: 46px;
+  }
+}
+
+.top-of-site-link {
+  visibility: hidden;
+  opacity: 0;
+  text-decoration: none;
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.5rem;
+  z-index: 99;
+
+  @include transition(.15s);
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  svg {
+    @include filter(drop-shadow(0 2px 5px rgba(0, 0, 0, .3)));
+  }
+}
+
+.top-of-site-link[data-visible=true] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.screen-reader-text {
+  @include visually-hidden();
+}
+
+
+.post-tags a {
+  background: #ac4142;
+  &:before {
+    border-color: transparent #ac4142 transparent transparent;
+  }
+}
+
+// https://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header
+// Only apply anchor offset to content areas and specific anchors, not navigation elements
+main [id]::before,
+.content [id]::before,
+#top-of-site-anchor::before {
+  content: '';
+  display: block;
+  // This is the height of the masthead, it should be adapting to the height of the masthead... but it's not for now...
+  height:      92px;
+  margin-top: -92px;
+  visibility: hidden;
+}
+
+/* Code */
+code,
+pre {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+}
+code {
+  padding: .25em .5em;
+  font-size: 85%;
+  color: #bf616a;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+}
+pre {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  font-size: .8rem;
+  line-height: 1.4;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f9f9f9;
+}
+pre code {
+  padding: 0;
+  font-size: 100%;
+  color: inherit;
+  background-color: transparent;
+}
+
+/* Pygments via Hugo */
+.highlight {
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+.highlight pre {
+  margin-bottom: 0;
+}
+
+.form-input {
+  border: 1px solid #ccc;
+  border-radius: .2em;
+  font-family: inherit;
+  font-size: 1.25em;
+  color: #000;
+  background-color: #fff;
+  width: 100%;
+  padding: 0.5em;
+
+  @include transition(all 0.15s ease-in-out);
+  @include appearance(none);
+
+  @include mq(tabletp) {
+    font-size: 1.15em;
+  }
+
+  @include mq(laptop) {
+    font-size: 1.1em;
+  }
+
+  &:focus {
+    @include box-shadow(none);
+    outline: none;
+    border-color: #5e5e5e;
+  }
+}
+
+#site-contact {
+  width: 100%;
+  padding-bottom: 20px;
+
+  @include mq(tabletp) {
+    padding-bottom: 40px;
+  }
+
+  @include mq(laptop) {
+    padding-bottom: 50px;
+  }
+
+  @include mq(desktop) {
+    padding-bottom: 60px;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.form-item {
+  margin-top: 15px;
+
+  @include mq(tabletp) {
+    margin-top: 20px;
+  }
+
+  @include mq(laptop) {
+    margin-top: 30px;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+form input[type="number"]:-moz-submit-invalid,
+form input[type="email"]:-moz-submit-invalid,
+form textarea:-moz-submit-invalid,
+form input[type="text"]:-moz-submit-invalid,
+form select:-moz-submit-invalid,
+form input:-moz-ui-invalid {
+  @include box-shadow(0 0 2px 1px #D64541!important);
+}
+
+.form-item-error {
+  .form-input,
+  .form-textarea {
+    @include box-shadow(0 0 2px 1px #D64541!important);
+  }
+}
+
+.form-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #676767;
+
+  @include mq(tabletp) {
+    font-size: 18px;
+  }
+
+  @include mq(laptop) {
+    font-size: 20px;
+  }
+}
+
+.contact-form-input,
+.contact-form-textarea {
+  margin-top: 8px;
+}
+
+@include input-placeholder(#ABB7B7, 15%);
+
+.contact-form-textarea {
+  font-size: 1.1em;
+  min-height: 200px;
+  resize: none;
+
+  @include mq(tabletp) {
+    font-size: 1.05em;
+  }
+
+  @include mq(laptop) {
+    font-size: 1em;
+  }
+}
+
+.button {
+  display: inline-block;
+  padding: 9px 10px 10px;
+  font-size: 13px;
+  line-height: 1;
+  border: 2px solid #5e5e5e;
+  border-radius: 3px;
+  background: #5e5e5e;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+
+  @include mq(tabletp) {
+    padding: 11px 20px 12px;
+    font-size: 15px;
+  }
+
+  &:hover {
+    background: adjust-hue(#404040,15%);
+    border-color: adjust-hue(#404040,15%);
+    color: #fff;
+  }
+
+  svg {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+      margin-left: 5px;
+    }
+
+    @include mq(tabletp) {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+        margin-left: 8px;
+      }
+    }
+  }
+}
+
+.hide-element {
+  display: none;
+}
+
+#search-form .search-error.hide-element {
+  display: none;
+}
+
+.search-item {
+  font-weight: bold;
+  background-color: rgb(255, 255, 84);
+}
+
+.search-error,
+.search-error-message {
+  @include transition(all .5s ease-out);
+}
+
