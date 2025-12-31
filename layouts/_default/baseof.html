@@ -8,19 +8,22 @@
     {{ partial "head.html" . }}
     <body>
         <div id="top-of-site-anchor"></div>
+        {{/* Sidebar lives outside the masthead to avoid stacking context issues */}}
         {{ if .Params.toc }}
             {{ partial "sidebar-toc.html" . }}
         {{ else }}
             {{ partial "sidebar.html" . }}
         {{ end }}
+        {{/* Toggle outside masthead to escape backdrop-filter stacking context */}}
+        <label class="sidebar-toggle" for="sidebar-toggle" aria-label="{{ i18n "toggle_sidebar" | default "Toggle sidebar" }}">
+            <span class="sidebar-toggle-icon"></span>
+        </label>
         <div class="wrap">
-            <label for="sidebar-checkbox" class="sidebar-toggle" tabindex="1"></label>
             <header class="masthead">
                 <div class="container">
                     <h3 class="masthead-title">
                         <img src="{{ site.Params.MastheadTitleImage }}" alt="{{ site.Title }}">
                         <a href="{{ site.Home.RelPermalink }}" title="{{ site.Params.mastheadTitle }}">{{ site.Params.mastheadTitle }}</a>
-                        <!-- <br><small>{{ site.Params.tagline }}</small> -->
                     </h3>
                 </div>
             </header>

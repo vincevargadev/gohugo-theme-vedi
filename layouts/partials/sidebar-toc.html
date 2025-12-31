@@ -1,7 +1,6 @@
-{{/* Target for toggling the sidebar `.sidebar-checkbox` is for regular styles, `#sidebar-checkbox` for behavior. */}}
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+{{/* Sidebar TOC with checkbox toggle for CSS-only interaction */}}
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-toggle" aria-hidden="true">
 
-<!-- Toggleable sidebar -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-item">
         <p>{{ .Title }}</p>

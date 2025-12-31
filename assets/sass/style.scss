@@ -310,28 +310,29 @@ tbody tr:nth-child(odd) th {
 
 .masthead {
   border-bottom: 0.5px solid var(--color-border);
-  padding-top: calc(20px + env(safe-area-inset-top));
-  padding-bottom: 8px;
-  text-align: center;
+  padding-top: calc(12px + env(safe-area-inset-top));
+  padding-bottom: 12px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 250; /* Above the sidebar (z-index: 200) */
   backdrop-filter: blur(6px);
- }
+  display: flex;
+  align-items: center;
+}
 
 main#main {
-  padding-top: 110px;
+  padding-top: 90px;
 }
 
 .masthead-title {
   color: #505050;
   font-family: var(--font-body);
   font-size: 1.8rem;
-  line-height: .777em;
-  margin: 2em 0 0;
-  text-align: center;
+  line-height: 1;
+  margin: 0;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -340,7 +341,7 @@ main#main {
 .masthead-title img {
   display: inline-block;
   height: 40px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   border-radius: 50%;
   margin-right: 14px;
   opacity: 1;
@@ -349,19 +350,11 @@ main#main {
 
 .masthead-title small {
   color: var(--color-text);
-  display: none; /* This is an accessibility no-no */
+  display: none;
   font-family: var(--font-heading);
   font-size: .88rem;
   font-weight: normal;
   letter-spacing: .05rem;
-}
-
-@media (min-width: 320px) {
-  .masthead-title {
-    margin-top: 2px;
-    margin-right: 15%;
-    margin-left: 15%;
-  }
 }
 
 @media (min-width: 48em) {
@@ -384,26 +377,34 @@ main#main {
   Source: http://css-tricks.com/off-canvas-menu-with-css-target/#comment-207504
 */
 
+.sidebar-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .sidebar {
-  left: -16rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 16rem;
-  visibility: hidden;
+  z-index: 200;
   overflow-y: auto;
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  font-size: .875rem;/* 15px*/
+  font-size: .875rem;
   color: var(--color-text-sidebar);
   border-right: .5px solid var(--color-border-sidebar);
   background-color: var(--color-bg-sidebar);
-  transition: all .15s ease-in-out;
   padding-top: env(safe-area-inset-top);
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 200;
   background: rgba(1, 1, 1, 0.5);
   backdrop-filter: blur(8px);
+  /* Hidden off-screen by default */
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform .2s ease-in-out, visibility .2s ease-in-out;
 }
 
 .sidebar .footer {
@@ -482,56 +483,46 @@ a.sidebar-nav-item:focus {
   }
 }
 
-.sidebar-checkbox {
-  margin-top: env(safe-area-inset-top);
-  display: none;
-}
-
+/* Sidebar toggle - fixed position to escape masthead stacking context */
 .sidebar-toggle {
-  top:  calc(.8rem + env(safe-area-inset-top));
-  left: 1rem;
-  display: block;
-  padding: .25rem .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem .75rem;
   color: #505050;
   background-color: var(--color-bg);
   border-radius: .25rem;
   cursor: pointer;
+  border: 1px solid var(--color-border);
+  transition: background-color .15s, border-color .15s;
+  /* Fixed position to stay above everything */
   position: fixed;
-  z-index: 400;
-  &:focus {
-    outline: auto;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 1rem;
+  z-index: 400; /* Above everything including open sidebar */
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 }
 
-.sidebar-toggle:before {
-  z-index: 300;
-}
-
-.sidebar-toggle:before {
-  display: inline-block;
+.sidebar-toggle-icon {
+  display: block;
   width: 1rem;
   height: .75rem;
-  content: "";
   background-image: linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
 }
 
 .sidebar-toggle:active,
-#sidebar-checkbox:focus ~ .sidebar-toggle,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
+#sidebar-toggle:checked ~ .sidebar-toggle {
   color: #fff;
   background-color: var(--color-bg-sidebar-toggle-active);
+  border-color: var(--color-bg-sidebar-toggle-active);
 }
 
-.sidebar-toggle:active:before,
-#sidebar-checkbox:focus ~ .sidebar-toggle:before,
-#sidebar-checkbox:checked ~ .sidebar-toggle:before {
+.sidebar-toggle:active .sidebar-toggle-icon,
+#sidebar-toggle:checked ~ .sidebar-toggle .sidebar-toggle-icon {
   background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-}
-
-@media (min-width: 30.1em) {
-  .sidebar-toggle {
-    position: fixed;
-  }
 }
 
 @media print {
@@ -547,40 +538,30 @@ a.sidebar-nav-item:focus {
   Handle the sliding effects of the sidebar and content in one spot, separate from the default
   styles.
 
-  As a heads-up, we don't use `transform: translate3d()` here because, when mixed with
-  `position: fixed;` for the sidebar toggle, it creates a new containing block. Put simply, the
-  fixed sidebar toggle behaves like `position: absolute;` when transformed.
-
-  Read more about it at http://meyerweb.com/eric/thoughts/2011/09/12/.
+  Using checkbox hack with label in masthead for clean layout integration.
 */
 
-
-#sidebar-checkbox:checked + .sidebar {
-  /* z-index: 10; */
+#sidebar-toggle:checked ~ .sidebar {
+  transform: translateX(0);
   visibility: visible;
+  z-index: 300; /* Above masthead (z-index: 250) when open */
 }
 
-#sidebar-checkbox:checked ~ .sidebar {
-  transform: translateX(16rem);
+.layout-reverse .sidebar {
+  left: auto;
+  right: 0;
+  transform: translateX(100%);
 }
 
-#sidebar-checkbox:checked ~ .wrap .masthead-title img {
-  opacity: 0;
-}
-
-.layout-reverse #sidebar-checkbox:checked ~ .sidebar {
-  transform: translateX(-16rem);
-}
-
-.sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
+.layout-reverse #sidebar-toggle:checked ~ .sidebar {
   transform: translateX(0);
 }
 
-.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar-toggle {
+.sidebar-overlay #sidebar-toggle:checked ~ .sidebar-toggle {
   box-shadow: 0 0 0 .25rem #fff;
 }
 
-.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
+.sidebar-overlay #sidebar-toggle:checked ~ .sidebar {
   box-shadow: .25rem 0 .5rem rgba(0,0,0,.1);
 }
 
@@ -667,7 +648,7 @@ u,
 }
 
 .sidebar-toggle:active,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
+#sidebar-toggle:checked ~ .sidebar-toggle {
   background-color: var(--color-accent);
 }
 
@@ -702,10 +683,9 @@ u,
     font-weight: 400;
   }
 
-  .sidebar-toggle:before {
+  .sidebar-toggle-icon {
     /* Inverted hamburger icon for dark mode */
     background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-    z-index: 300;
   }
 
   /* Mermaid diagrams only work with light background */
