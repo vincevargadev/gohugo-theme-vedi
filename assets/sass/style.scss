@@ -854,6 +854,30 @@ ul.pager {
 // Tags - displayed as simple rectangles at top of posts
 .post-tags-header {
   margin-bottom: 1.5em;
+  display: inline-flex;
+}
+
+// Term page header (e.g., tag pages)
+.term-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  margin-bottom: 1.5em;
+  flex-wrap: wrap;
+
+  .term-label {
+    font-family: var(--font-body);
+    font-size: 0.9em;
+    color: var(--color-text);
+  }
+
+  .post-tags-header {
+    margin-bottom: 0;
+  }
+  
+  .post-tags li {
+    font-size: 0.85em;
+  }
 }
 
 .post-tags {

@@ -2,23 +2,31 @@
 
 {{/* This template is for list of all publications in a Term (for example a Tag) */}}
 <div class="articles">
-    <h1 class="page-title">
-        {{ with .Title }}{{ i18n "publications_tagged" . }}{{ end }}
-    </h1>
+    <div class="term-header">
+        <span class="term-label">{{ i18n "publications_tagged_label" | default "Publications tagged" }}</span>
+        <span class="post-tags-header">
+            <ul class="post-tags">
+                <li><a href="{{ .Permalink }}">{{ .Title | lower }}</a></li>
+            </ul>
+        </span>
+    </div>
 
     {{/* Render category content if any */}}
     {{ with .Content }}
         <div class="section-content">
-            {{ .Content }}
+            {{ . }}
         </div>
     {{ end }}
 
-    {{/* Render posts list */}}
-    <div class="post-list">
-        {{ range .Paginator.Pages }}
-            {{ .Render "teaser" }}
-        {{ end }}
-
+    {{/* Render posts list like mini-toc */}}
+    <div class="toc" role="navigation">
+        <ul class="texts">
+            {{ range .Paginator.Pages }}
+                <li class="text-title">
+                    {{ partial "post-toc-summary" . }}
+                </li>
+            {{ end }}
+        </ul>
         {{ partial "pagination.html" . }}
     </div>
 </div>
