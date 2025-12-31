@@ -604,93 +604,8 @@ a.sidebar-nav-item:focus {
   font-size: 0.8rem!important;
 }
 
-div.poem,
-.poem,
-div.narrative,
-.narrative {
-  margin-bottom: 5rem;
-}
-
 div.toc {
   margin-bottom: 4rem;
-}
-
-
-/*
-  Poem styles
-
-  If you want your lines not to wrap on small screens, add the rule "white-space: nowrap;"; If you
-  want you want to remove the hanging indent, reset the padding-left to 0 and erase text-indent
-*/
-
-.poem ul,
-.poetry ul,
-ul.poetry {
-  list-style: none;
-  list-style-type: none;
-  padding-left: 1rem;
-  text-indent: -1rem;
-}
-
-
-/* This snippet helps us reset the margin for all spans with the indent- class */
-.poem span[class^='indent-'],
-.poetry span[class^='indent-'] {
-  margin: 0;/* reset browsers default margin styles*/
-}
-
-
-/*
-  To set line indentation for poetry wrap the line in a span with a class="indent-x" attribute.
-  The x is represents a rem (root em) value
-*/
-
-.indent-1 {
-  padding-left: 1rem;
-}
-
-.indent-2 {
-  padding-left: 2rem;
-}
-
-.indent-3 {
-  padding-left: 3rem;
-}
-
-.indent-4 {
-  padding-left: 4rem;
-}
-
-.indent-5 {
-  padding-left: 5rem;
-}
-
-.indent-6 {
-  padding-left: 6rem;
-}
-
-.indent-7 {
-  padding-left: 7rem;
-}
-
-.indent-8 {
-  padding-left: 8rem;
-}
-
-.indent-9 {
-  padding-left: 9rem;
-}
-
-.indent-10 {
-  padding-left: 10rem;
-}
-
-.poem .byline,
-.poetry .byline {
-  font-style: italic;
-  font-weight: normal;
-  letter-spacing: 0;
-  margin-top: -.5rem;
 }
 
 sub,
@@ -889,9 +804,7 @@ template {
   margin-top: -.5rem;
 }
 
-.post .byline,
-.poem .byline,
-.poetry .byline {
+.post .byline {
   margin-bottom: 1rem;
 }
 

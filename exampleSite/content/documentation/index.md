@@ -146,62 +146,6 @@ By default, Hugo uses a special Markdown processor called Goldmark. The processo
 
 ---
 
-## Genres
-
-Ed offers four different layouts: poem, narrative, drama and simple post. To create content of a certain genre, create a file in the appropriate folder. For example, if you want to create a poem, create a file in the `content/poems` folder. Another way is to indicated genre in the front matter on your texts. The templates that govern how these genres are displayed can be found in the Ed's `layouts` folder. Redefining these layouts in project wide level will allow you to tweak the stylesheets according to your different needs. Out of the box, Ed contains some special instructions for poetry in its stylesheets that allow you to deal with some of the peculiarities of poetry layouts.
-
-To indicate lines in poetry we use the line syntax from Markdown:
-
-```markdown
-- Hold fast to dreams
-- For if dreams die
-- Life is a broken-winged bird
-- That cannot fly.
-- Hold fast to dreams
-- For when dreams go
-- Life is a barren field
-- Frozen with snow.
-```
-
-The `-` at the beginning of each line indicates that these are lines. Another way to achieve the same effect is to use the following syntax:
-
-```markdown
-Hold fast to dreams\
-For if dreams die\
-Life is a broken-winged bird\
-That cannot fly.\
-Hold fast to dreams\
-For when dreams go\
-Life is a barren field\
-Frozen with snow.
-```
-
-To indent specific lines we take advantage of Hugo shortcuts that allows us to create empty indentation for a line. This approach still allows the line to be readable while editing.
-
-```markdown
-- {{</* indent 3 */>}} But O heart! heart! heart!
-- {{</* indent 4 */>}} O the bleeding drops of red,
-- {{</* indent 5 */>}} Where on the deck my Captain lies,
-- {{</* indent 6 */>}} Fallen cold and dead.
-```
-
-or:
-
-```markdown
-{{</* indent 3 */>}} But O heart! heart! heart!\
-{{</* indent 4 */>}} O the bleeding drops of red,\
-{{</* indent 5 */>}} Where on the deck my Captain lies,\
-{{</* indent 6 */>}} Fallen cold and dead.
-```
-
-The `{{</* indent 3 */>}}` is what we need to in order to indicate the indent value for that line. Values can range from 1-10. You can expand the range or adjust the values in the custom stylesheet file. Ed is customized by creating stylesheet files in `assets/css/extended/*.css` at project wide level.
-
-The example from Raisin in the Sun shows us that we don't need much special markup for theater as long as we use CAPITAL LETTERS for speakers. Italics for directions are easy enough. Just use `*` around the words you want to italicize.
-
-*Narrative of the Life of Frederick Douglass* shows us an example of narrative that includes footnotes and quoted poetry. See the sections below for how to accomplish these different effects.
-
----
-
 ## Configuring Author Selection
 
 Ed offers flexible author management that adapts to both simple and
@@ -344,7 +288,7 @@ These footnotes can be placed anywhere, but they will always be generated at the
 
 Please note, you need to indent all lines at the same level to make them stay inside the footnote.
 
-At the moment (May 2022) time the footnotes system provided by Hugo does have one limitation: It does not support non-numbered footnotes, and it only allows you to have one set of footnotes for a text. In some cases we have to separate the author's footnotes from our own, in others we want to represent the author's own footnote style. In these cases we have to use custom Ed's shortcode for footnotes. Here's the example from *Narrative of the Life*:
+At the moment (May 2022) time the footnotes system provided by Hugo does have one limitation: It does not support non-numbered footnotes, and it only allows you to have one set of footnotes for a text. In some cases we have to separate the author's footnotes from our own, in others we want to represent the author's own footnote style. In these cases we have to use custom Ed's shortcode for footnotes. Here's an example:
 
 ```markdown
 ... At this time, Anna,{{</* footnote "fn2" */>}} my intended wife, came on;
@@ -362,36 +306,16 @@ At the moment (May 2022) time the footnotes system provided by Hugo does have on
 
 ## Blockquote
 
-*Narrative of the Life* also includes several blockquote elements. You can also find another example of blockquote use in the footnote of "O Captain! My Captain!" Simple blockquote are simple enough in Markdown:
+Blockquotes are simple in Markdown:
 
 ```
-> This is to certify that I, the undersigned, have given the bearer, my servant, full liberty to go to Baltimore, and spend the Easter holidays.
+> This is an example blockquote.
 >
-> Written with mine own hand, &c., 1835.
-> WILLIAM HAMILTON,
+> It can span multiple paragraphs.
+> Just keep using the > prefix.
 ```
 
-To use a line break in block elements add two spaces after the end of the line where you want the break. You can't see them after `&c., 1835.` but they are there.
-
-Things get a bit complicated when we want to use poetry inside the block or when the block is included in another block element, like a footnote. Here's the last two stanzas from "A Parody" in *Narrative of the Life*, which shows an example of a blockquote of poetry:
-
-```
-...
-> - Two others oped their iron jaws,
-> - And waved their children-stealing paws;
-> - There sat their children in gewgaws;
-> - By stinting negroes' backs and maws,
-> - They kept up heavenly union.
-{.poetry}
-> - All good from Jack another takes,
-> - And entertains their flirts and rakes,
-> - Who dress as sleek as glossy snakes,
-> - And cram their mouths with sweetened cakes;
-> - And this goes down for union.
-{.poetry}
-```
-
-The `{.poetry}` tag at the end tells the processor to think of the lines above it as poetry. The `{.poetry}` tag is an example of Goldmark class assignments for block-elements. Because this segment of poetry exists in the 'narrative' layout, and because it is part of a blockquote, we need to signal to the processor to process poetry this way, so that the right class is invoked in the stylesheet. The good news is this is the most complex Goldmark syntax layout you will encounter in Ed.
+To use a line break in block elements add two spaces after the end of the line where you want the break.
 
 
 ## Pages
@@ -439,7 +363,7 @@ The third way is simple as the previous one, but very useful for long texts. If 
 toc: true
 ```
 
-Ed will activate the optional table of content sidebar (`layouts/partials/sidebar-toc.html` in Ed) and move the table of contents to a special sidebar for that page. *Narrative of the Life* uses this method for its table of content.
+Ed will activate the optional table of content sidebar (`layouts/partials/sidebar-toc.html` in Ed) and move the table of contents to a special sidebar for that page.
 
 The internal links pointing to the right sections in your document are generated from the title names automatically. If you can figure out how Ed accomplishes this trick, you have graduated from the Ed school of minimal editions.
 
@@ -517,7 +441,7 @@ You can obtain the `repoId` and `categoryId` by configuring your repository on t
 
 ### Comment Configuration for Content Types
 
-In the Ed theme, comments are disabled by default for all content types to maintain simplicity and focus for users. This includes all posts (poems, narratives, dramas, and blog posts) and pages. This setting helps ensure that comments are only enabled where they are explicitly needed, allowing for more granular control over site interactions.
+In the Ed theme, comments are disabled by default for all content types to maintain simplicity and focus for users. This includes all posts and pages. This setting helps ensure that comments are only enabled where they are explicitly needed, allowing for more granular control over site interactions.
 
 ```toml
 # Default site configuration to disable comments globally

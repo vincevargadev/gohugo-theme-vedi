@@ -6,15 +6,7 @@
             {{ .Params.pageTitle | default .Title }}
         </h1>
         <p class="byline">
-            {{ if in (slice "drama" "narrative" "poem") $postType }}
-                {{ $showAuthor := .Site.Params.showAuthor | default false }}
-                {{ $author := partial "head/author.html" . }}
-                {{ if (and $showAuthor (ne $author ""))}}
-                    <span class="author">{{ i18n "by" . }}</span>
-                {{ end }}
-            {{ else }}
-                {{ partial "post-meta/date.html" . }}
-            {{ end }}
+            {{ partial "post-meta/date.html" . }}
         </p>
     </header>
 
@@ -22,9 +14,6 @@
         {{ .Content }}
     </div>
 
-    {{/* Post tags are not allowed for drama, narratives and poems */}}
-    {{ if not (in (slice "drama" "narrative" "poem") $postType) }}
-        {{ partial "post-tags.html" . }}
-    {{ end }}
+    {{ partial "post-tags.html" . }}
 </article>
 {{ end }}
