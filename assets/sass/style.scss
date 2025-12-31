@@ -4,6 +4,11 @@
   --font-heading: sans-serif;
   --font-size-base: 1.25em; /* 20px / 16px = 1.25em */
 
+  /* Layout - Masthead dimensions */
+  --masthead-padding-y: 12px;
+  --masthead-content-height: 40px; /* Based on masthead-title img height */
+  --masthead-height: calc(var(--masthead-padding-y) * 2 + var(--masthead-content-height) + env(safe-area-inset-top));
+
   /* Colors - Light theme */
   --color-bg: #fff;
   --color-bg-secondary: #f9f9f9;
@@ -310,8 +315,8 @@ tbody tr:nth-child(odd) th {
 
 .masthead {
   border-bottom: 0.5px solid var(--color-border);
-  padding-top: calc(12px + env(safe-area-inset-top));
-  padding-bottom: 12px;
+  padding-top: calc(var(--masthead-padding-y) + env(safe-area-inset-top));
+  padding-bottom: var(--masthead-padding-y);
   position: fixed;
   top: 0;
   left: 0;
@@ -323,7 +328,7 @@ tbody tr:nth-child(odd) th {
 }
 
 main#main {
-  padding-top: 90px;
+  padding-top: var(--masthead-height);
 }
 
 .masthead-title {
@@ -497,7 +502,7 @@ a.sidebar-nav-item:focus {
   transition: background-color .15s, border-color .15s, box-shadow .15s;
   /* Fixed position to stay above everything */
   position: fixed;
-  top: calc(12px + env(safe-area-inset-top));
+  top: calc(var(--masthead-padding-y) + env(safe-area-inset-top));
   left: 1rem;
   z-index: 400; /* Above everything including open sidebar */
   /* Focus styles for keyboard navigation */
@@ -1017,9 +1022,8 @@ main [id]::before,
 #top-of-site-anchor::before {
   content: '';
   display: block;
-  // This is the height of the masthead, it should be adapting to the height of the masthead... but it's not for now...
-  height:      92px;
-  margin-top: -92px;
+  height: var(--masthead-height);
+  margin-top: calc(-1 * var(--masthead-height));
   visibility: hidden;
 }
 
