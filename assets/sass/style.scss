@@ -851,70 +851,35 @@ ul.pager {
   }
 }
 
-.tags-wrapper {
-  position: relative;
+// Tags - displayed as simple rectangles at top of posts
+.post-tags-header {
+  margin-bottom: 1.5em;
 }
 
 .post-tags {
   margin: 0;
   padding: 0;
-  position: absolute;
-  right: 24px;
-  bottom: -12px;
   list-style: none;
   text-indent: unset;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
 
-  li, a {
+  li {
     font-family: var(--font-heading);
-    float: left;
-    height: 24px;
-    line-height: 24px;
-    position: relative;
     font-size: .75em;
   }
 
   a {
-    margin-left: 20px;
-    padding: 0 10px 0 12px;
-    background: var(--color-link);
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    background: var(--color-accent);
     color: #fff;
     text-decoration: none;
-
-    border-radius: 0 4px 4px 0;
-
-    &:before {
-      content: "";
-      float: left;
-      position: absolute;
-      top: 0;
-      left: -12px;
-      width: 0;
-      height: 0;
-      border-color: transparent var(--color-link) transparent transparent;
-      border-style: solid;
-      border-width: 12px 12px 12px 0;
-    }
-
-    &:after {
-      content: "";
-      position: absolute;
-      top: 10px;
-      left: 0;
-      float: left;
-      width: 4px;
-      height: 4px;
-      background: #fff;
-
-      border-radius: 2px;
-      box-shadow: -1px -1px 2px var(--color-text);
-    }
+    border-radius: 4px;
 
     &:hover {
       background: var(--color-text-muted);
-    }
-
-    &:hover:before {
-      border-color: transparent var(--color-text-muted) transparent transparent;
     }
   }
 }
@@ -1002,12 +967,6 @@ ul.tags-cloud {
 }
 
 
-.post-tags a {
-  background: var(--color-accent);
-  &:before {
-    border-color: transparent var(--color-accent) transparent transparent;
-  }
-}
 
 // https://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header
 // Only apply anchor offset to content areas and specific anchors, not navigation elements

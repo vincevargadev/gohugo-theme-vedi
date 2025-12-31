@@ -10,10 +10,14 @@
         </p>
     </header>
 
+    {{- if .Params.Tags }}
+    <div class="post-tags-header">
+        {{ partial "post-tags.html" . }}
+    </div>
+    {{- end }}
+
     <div class="{{ $postType }}-body">
         {{ .Content }}
     </div>
-
-    {{ partial "post-tags.html" . }}
 </article>
 {{ end }}
