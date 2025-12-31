@@ -22,7 +22,6 @@
             {{- $active = or $active (eq .Name $current.Title) }}
             <a class="sidebar-nav-item{{ if $active }} active{{ end }}"
                 href="{{ .URL }}"
-                id="menu-main-{{ .Identifier }}"
                 {{- if eq .Params.external true }} target="_blank" rel="noopener noreferrer"{{ end }}>
                 {{- print .Name | safeHTML -}}
             </a>
@@ -34,7 +33,7 @@
             <div class="sidebar-nav-item">
                 {{- range $i, $ := site.Menus.feeds }}
                     {{ if $i }}<span aria-hidden="true">|</span>{{ end }}
-                    <a href="{{ .URL }}" id="menu-feeds-{{ .Identifier }}" class="menu-feeds-item" data-feed-type="{{ .Identifier }}">
+                    <a href="{{ .URL }}" class="menu-feeds-item" data-feed-type="{{ .Identifier }}">
                         {{-  print .Name | safeHTML -}}
                     </a>
                 {{ end }}

@@ -1,15 +1,4 @@
-/*
-  To apply a different color scheme to the whole scroll down to the themes section for instructions at
-  the very bottom of this file
-*/
-
 @import "_mixins";
-
-/*
-  General
-
-  Update the foundational and global aspects of the page.
-*/
 
 * {
   @include box-sizing(border-box);
@@ -19,7 +8,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  /* padding-top: env(safe-area-inset-top); */
   overflow-x: hidden;
 }
 
@@ -27,16 +15,6 @@ html {
   font-family: $main-font;
   font-size: 1em; /* 16px; specify in ems to support text resizing in all browsers */
   line-height: 1.5;
-}
-
-.status-glass {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top); /* height of the status bar */
-  z-index: 100;
-  overflow: hidden;
 }
 
 @media (min-width: 38em) {
@@ -55,25 +33,10 @@ body {
   margin-bottom: 4rem;
 }
 
-
-/*
-  Wrapper
-
-  The wrapper is used to position site content when the sidebar is toggled. We use an outter wrap to
-  position the sidebar without interfering with the regular page content.
-*/
-
 .wrap {
   position: relative;
   width: 100%;
 }
-
-
-/*
-  Container
-
-  Center the page content.
-*/
 
 .container {
   max-width: 32rem;
@@ -89,19 +52,16 @@ body {
   }
 }
 
-/* Links */
 a, .text-title a {
   color: $link-color;
   text-decoration: none;
 }
 
-/* `:focus` is linked to `:hover` for basic accessibility */
 a:hover,
 a:focus {
   text-decoration: underline;
 }
 
-/* Headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: $heading-font;
   margin-bottom: .5rem;
@@ -131,14 +91,11 @@ h3 {
   margin-top: 1.5rem;
 }
 
-
-/* Body text */
 p {
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
-/* Lists */
 ul {
   list-style: circle;
 }
@@ -148,7 +105,6 @@ ul, ol {
   margin-bottom: 1rem;
 }
 
-/* Horizontal ruler */
 hr {
   position: relative;
   margin: 1.5rem 0;
@@ -157,13 +113,11 @@ hr {
   border-bottom: 1px solid #fff;
 }
 
-/* Search highlighting */
 mark {
   color: white;
   background-color: $link-color;
 }
 
-/* Quotes */
 blockquote {
   padding: 0rem 1.5rem 0rem 2rem;
   margin: 0 0 20px 0;
@@ -183,7 +137,6 @@ blockquote p:last-child {
   }
 }
 
-/* Images */
 img {
   display: block;
   max-width: 100%;
@@ -191,7 +144,6 @@ img {
   border-radius: 5px;
 }
 
-/* Tables */
 table {
   margin-bottom: 1rem;
   width: 100%;
@@ -211,7 +163,7 @@ tbody tr:nth-child(odd) th {
 }
 
 .masthead {
-  border-bottom: 1px solid #eee;
+  border-bottom: 0.5px solid #eee;
   padding-top: calc(20px + env(safe-area-inset-top));
   padding-bottom: 8px;
   text-align: center;
@@ -221,7 +173,7 @@ tbody tr:nth-child(odd) th {
   right: 0;
   z-index: 100;
   backdrop-filter: blur(6px);
-}
+ }
 
 main#main {
   padding-top: 110px;
@@ -234,6 +186,19 @@ main#main {
   line-height: .777em;
   margin: 2em 0 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.masthead-title img {
+  display: inline-block;
+  height: 40px;
+  margin-bottom: 0px;
+  border-radius: 50%;
+  margin-right: 14px;
+  opacity: 1;
+  @include transition(opacity .15s ease-in-out);
 }
 
 .masthead-title small {
@@ -273,24 +238,26 @@ main#main {
   Source: http://css-tricks.com/off-canvas-menu-with-css-target/#comment-207504
 */
 
-/* Style and "hide" the sidebar */
 .sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: -14rem;
-  width: 14rem;
+  left: -16rem;
+  width: 16rem;
   visibility: hidden;
   overflow-y: auto;
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
   font-size: .875rem;/* 15px*/
   color: #313131;
-  border-right: 1px solid #d6d6d6;
+  border-right: .5px solid #d6d6d6;
   background-color: #202020;
-  @include transition(all .3s ease-in-out);
+  @include transition(all .15s ease-in-out);
   padding-top: env(safe-area-inset-top);
   display: flex;
   flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  background: rgba(1, 1, 1, 0.5);
+  backdrop-filter: blur(8px);
 }
 
 .sidebar .footer {
@@ -299,11 +266,10 @@ main#main {
 
 @media (min-width: 30em) {
   .sidebar {
-    font-size: .75rem;/* 14px */
+    font-size: .75rem;  
   }
 }
 
-/* Sidebar content */
 .sidebar {
   background-color: $link-color;
 }
@@ -337,15 +303,14 @@ main#main {
   margin-bottom: 0;
 }
 
-/* Sidebar nav */
 .sidebar-nav {
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  border-bottom: 0.5px solid rgba(255,255,255,.1);
 }
 
 .sidebar-nav-item {
   display: block;
   padding: .5rem 1rem;
-  border-top: 1px solid rgba(255,255,255,.1);
+  border-top: 0.5px solid rgba(255,255,255,.1);
 }
 
 a.sidebar-nav-item-toc {
@@ -371,15 +336,12 @@ a.sidebar-nav-item:focus {
   }
 }
 
-/* Hide the sidebar checkbox that we toggle with `.sidebar-toggle` */
 .sidebar-checkbox {
   margin-top: env(safe-area-inset-top);
   display: none;
 }
 
-/* Style the `label` that we use to target the `.sidebar-checkbox` */
 .sidebar-toggle {
-  position: absolute;
   top:  calc(.8rem + env(safe-area-inset-top));
   left: 1rem;
   display: block;
@@ -388,9 +350,15 @@ a.sidebar-nav-item:focus {
   background-color: #fff;
   border-radius: .25rem;
   cursor: pointer;
+  position: fixed;
+  z-index: 400;
   &:focus {
     outline: auto;
   }
+}
+
+.sidebar-toggle:before {
+  z-index: 300;
 }
 
 .sidebar-toggle:before {
@@ -398,10 +366,7 @@ a.sidebar-nav-item:focus {
   width: 1rem;
   height: .75rem;
   content: "";
-  background-image: -webkit-linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-  background-image:    -moz-linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-  background-image:     -ms-linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-  background-image:         linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
+  background-image: linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
 }
 
 .sidebar-toggle:active,
@@ -414,10 +379,7 @@ a.sidebar-nav-item:focus {
 .sidebar-toggle:active:before,
 #sidebar-checkbox:focus ~ .sidebar-toggle:before,
 #sidebar-checkbox:checked ~ .sidebar-toggle:before {
-  background-image: -webkit-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-  background-image:    -moz-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-  background-image:     -ms-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-  background-image:         linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
+  background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
 }
 
 @media (min-width: 30.1em) {
@@ -446,60 +408,23 @@ a.sidebar-nav-item:focus {
   Read more about it at http://meyerweb.com/eric/thoughts/2011/09/12/.
 */
 
-.wrap,
-.sidebar,
-.sidebar-toggle {
-  -webkit-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
-          backface-visibility: hidden;
-}
-
-.wrap,
-.sidebar-toggle {
-  -webkit-transition: -webkit-transform .3s ease-in-out;
-          transition: transform .3s ease-in-out;
-}
 
 #sidebar-checkbox:checked + .sidebar {
-  z-index: 10;
+  /* z-index: 10; */
   visibility: visible;
 }
 
-#sidebar-checkbox:checked ~ .sidebar,
-#sidebar-checkbox:checked ~ .wrap,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
-  @include transform(translateX(14rem));
+#sidebar-checkbox:checked ~ .sidebar {
+  @include transform(translateX(16rem));
 }
 
-
-/*
-  Reverse layout
-
-  Flip the orientation of the page by placing the `.sidebar` and sidebar toggle on the right side.
-*/
-
-.layout-reverse .sidebar {
-  left: auto;
-  right: -14rem;
+#sidebar-checkbox:checked ~ .wrap .masthead-title img {
+  opacity: 0;
 }
 
-.layout-reverse .sidebar-toggle {
-  left: auto;
-  right: 1rem;
+.layout-reverse #sidebar-checkbox:checked ~ .sidebar {
+  @include transform(translateX(-16rem));
 }
-
-.layout-reverse #sidebar-checkbox:checked ~ .sidebar,
-.layout-reverse #sidebar-checkbox:checked ~ .wrap,
-.layout-reverse #sidebar-checkbox:checked ~ .sidebar-toggle {
-  @include transform(translateX(-14rem));
-}
-
-
-/*
-  Overlay sidebar
-
-  Make the sidebar content overlay the viewport content instead of pushing it aside when toggled.
-*/
 
 .sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
   @include transform(translateX(0));
@@ -512,16 +437,6 @@ a.sidebar-nav-item:focus {
 .sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
   box-shadow: .25rem 0 .5rem rgba(0,0,0,.1);
 }
-
-/* Only one tweak for a reverse layout*/
-.layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
-  box-shadow: -.25rem 0 .5rem rgba(0,0,0,.1);
-}
-
-
-/*
-  ED special layouts
-*/
 
 .text-center {
   text-align: center!important;
@@ -632,7 +547,6 @@ ul.poetry {
   margin-top: -.5rem;
 }
 
-/* Footnotes styles */
 sub,
 sup {
   font-size: 75%;
@@ -663,14 +577,12 @@ a.footnote-ref {
   font-size: .66rem;
 }
 
-/* Bibliography styles */
 ol.bibliography {
   list-style-type:none;
   padding-left: 1rem;
   text-indent: -1rem;
 }
 
-/* Diplomatic editions */
 ins,
 .add {
   color:#288828;
@@ -746,6 +658,16 @@ li.prose-indent {
   color: #ac4142;
 }
 
+.masthead-title a {
+  font-family: sans-serif;
+  letter-spacing: -3px;
+  font-weight: 900;
+  color: black;
+  -webkit-text-stroke: 2px white;
+  // Without this, the text stroke looks off...
+  paint-order: stroke fill;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     background-color: #030303;
@@ -770,9 +692,18 @@ li.prose-indent {
     color: #ffffff;
   }
 
+  .masthead-title a:hover {
+    text-decoration: none;
+  }
+
+  .masthead {
+    border-bottom: .5px solid #2c2c2c;
+  }
+
   .sidebar {
-    background-color: #232323;
+    background: rgba(0, 0, 0, 0.5);
     color: #ececec;
+    border-right: .5px solid #2c2c2c;
   }
 
   .container a, .sidebar-toggle, .related-posts li a:hover {
@@ -793,10 +724,22 @@ li.prose-indent {
   }
 
   .sidebar-toggle:before {
-    background-image: -webkit-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-    background-image:    -moz-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-    background-image:     -ms-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-    background-image:         linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
+    background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
+    z-index: 300;
+  }
+
+  pre.chroma, pre, code {
+    background-color: #1e1e1e !important;
+  }
+
+  // Mermaid diagrams only work with light background...
+  pre.mermaid {
+    background-color: #f9f9f9 !important;
+  }
+
+  .masthead-title a {
+    color: white;
+    -webkit-text-stroke: 2px #060606;
   }
 }
 
@@ -1035,7 +978,7 @@ ul.tags-cloud {
 
   .tag-link {
     padding: 5px 5px 0;
-    @include transition(0.3s);
+    @include transition(0.15s);
   }
 }
 
@@ -1062,7 +1005,7 @@ ul.tags-cloud {
   right: 1.5rem;
   z-index: 99;
 
-  @include transition(.2s);
+  @include transition(.15s);
 
   &:hover {
     text-decoration: none;
@@ -1088,4 +1031,17 @@ ul.tags-cloud {
   &:before {
     border-color: transparent #ac4142 transparent transparent;
   }
+}
+
+// https://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header
+// Only apply anchor offset to content areas and specific anchors, not navigation elements
+main [id]::before,
+.content [id]::before,
+#top-of-site-anchor::before {
+  content: '';
+  display: block;
+  // This is the height of the masthead, it should be adapting to the height of the masthead... but it's not for now...
+  height:      92px;
+  margin-top: -92px;
+  visibility: hidden;
 }

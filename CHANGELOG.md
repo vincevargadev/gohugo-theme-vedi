@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v0.9.0](https://github.com/vincevargadev/gohugo-theme-vedi/compare/170d56e...HEAD)
 
+### Added
+
+- Add dark mode
+
 ### Changed
 
 - Ensure sidebar toggle can be toggled with keyboard only.

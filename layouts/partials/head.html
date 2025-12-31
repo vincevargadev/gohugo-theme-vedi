@@ -1,8 +1,6 @@
 <head>
     <meta charset="utf-8">
-    <!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
     <link rel="canonical" href="{{ .Permalink }}">
 
     <title>{{ block "title" . }}{{- partial "title.html" . -}}{{ end }}</title>
@@ -18,9 +16,19 @@
     {{ partial "styles.html" . }}
 
     {{- /* Favicons */}}
-    <link rel="icon" href="{{ site.Params.assets.favicon | default "favicon.ico" | relURL }}" sizes="any"><!-- 32×32 -->
-    <link rel="icon" href="{{ site.Params.assets.svgicon | default "icon.svg" | relURL }}" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="{{ site.Params.assets.apple_touch_icon | default "apple-touch-icon.png" | relURL }}"><!-- 180×180 -->
+    <!-- Remove the old stuff, and make sure the new stuff is working and configurable from hugo toml -->
+    <!-- https://realfavicongenerator.net/ -->
+
+    <!--<link rel="icon" href="{{ site.Params.assets.favicon | default "favicon.ico" | relURL }}" sizes="any">--><!-- 32×32 -->
+    <!--<link rel="icon" href="{{ site.Params.assets.svgicon | default "icon.svg" | relURL }}" type="image/svg+xml"> -->
+    <!--<link rel="apple-touch-icon" href="{{ site.Params.assets.apple_touch_icon | default "apple-touch-icon.png" | relURL }}"> --><!-- 180×180 -->
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png?v=2" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="/favicon.ico?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+    <meta name="apple-mobile-web-app-title" content="vincevarga.dev" />
+    <link rel="manifest" href="/site.webmanifest?v=2" />
 
     {{- range .AlternativeOutputFormats }}
     <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ .Name }}">
@@ -49,4 +57,10 @@
 
     {{- /* Scripts */}}
     {{- partial "scripts.html" . }}
+
+    <!-- https://gohugo.io/content-management/mathematics/ -->
+    <!-- If the math param in the frontmatter is set to true, we load math handling JS. -->
+    {{ if .Param "math" }}
+      {{ partialCached "math.html" . }}
+    {{ end }}
 </head>
