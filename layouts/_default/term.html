@@ -1,7 +1,16 @@
 {{ define "main" }}
 
-{{/* This template is for list of all publications in a Term (for example a Tag) */}}
+{{/* This template is for list of all publications in a Term (for example a Tag or Category) */}}
 <div class="articles">
+    {{/* Check if this is a category or tag taxonomy */}}
+    {{ if eq .Data.Singular "category" }}
+    {{/* Category display - plain text style */}}
+    <div class="category-header">
+        <span class="category-label">Category:</span>
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </div>
+    {{ else }}
+    {{/* Tag display - pill style */}}
     <div class="term-header">
         <span class="term-label">{{ i18n "publications_tagged_label" | default "Publications tagged" }}</span>
         <span class="post-tags-header">
@@ -10,8 +19,9 @@
             </ul>
         </span>
     </div>
+    {{ end }}
 
-    {{/* Render category content if any */}}
+    {{/* Render term content if any */}}
     {{ with .Content }}
         <div class="section-content">
             {{ . }}

@@ -852,6 +852,41 @@ ul.pager {
 }
 
 // Tags - displayed as simple rectangles at top of posts
+// Categories displayed as plain text links
+.post-categories {
+  font-family: var(--font-body);
+  font-size: 0.9em;
+  margin-bottom: 0.75em;
+  
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Category page header (plain text style, not pills)
+.category-header {
+  font-family: var(--font-body);
+  margin-bottom: 1.5em;
+  
+  .category-label {
+    color: var(--color-text);
+  }
+  
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 .post-tags-header {
   margin-bottom: 1.5em;
   display: inline-flex;

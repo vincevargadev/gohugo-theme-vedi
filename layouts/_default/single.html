@@ -10,6 +10,16 @@
         </p>
     </header>
 
+    {{- with .Params.categories }}
+    <div class="post-categories">
+        {{- if gt (len .) 1 }}Categories: {{ else }}Category: {{ end -}}
+        {{- range $i, $cat := . -}}
+            {{- if $i }}, {{ end -}}
+            <a href="/categories/{{ $cat | urlize }}/">{{ $cat }}</a>
+        {{- end -}}
+    </div>
+    {{- end }}
+
     {{- if .Params.Tags }}
     <div class="post-tags-header">
         {{ partial "post-tags.html" . }}
