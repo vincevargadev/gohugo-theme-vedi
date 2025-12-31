@@ -1176,3 +1176,28 @@ pre code {
   transition: all .5s ease-out;
 }
 
+/* Heading anchor links (GitHub-style) */
+.heading-anchor {
+  .anchor-link {
+    margin-left: 0.4em;
+    opacity: 0;
+    color: var(--color-text-muted);
+    font-weight: normal;
+    font-size: 0.85em;
+    text-decoration: none;
+    transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out;
+  }
+
+  &:hover .anchor-link,
+  .anchor-link:focus {
+    opacity: 0.6;
+  }
+  
+  .anchor-link:hover,
+  .anchor-link:focus {
+    opacity: 1;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+}
+

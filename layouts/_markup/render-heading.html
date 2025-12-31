@@ -1,0 +1,6 @@
+{{- /* Render heading with anchor link */ -}}
+<h{{ .Level }} id="{{ .Anchor | safeURL }}" class="heading-anchor">
+  {{- .Text | safeHTML -}}
+  <a href="#{{ .Anchor | safeURL }}" class="anchor-link" aria-hidden="true">#</a>
+</h{{ .Level }}>
+
