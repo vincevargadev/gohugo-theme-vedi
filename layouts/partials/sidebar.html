@@ -27,16 +27,11 @@
 
 
 
-        {{- with site.Menus.feeds }}
-            <div class="sidebar-nav-item">
-                {{- range $i, $ := site.Menus.feeds }}
-                    {{ if $i }}<span aria-hidden="true">|</span>{{ end }}
-                    <a href="{{ .URL }}" class="menu-feeds-item" data-feed-type="{{ .Identifier }}">
-                        {{-  print .Name | safeHTML -}}
-                    </a>
-                {{ end }}
-            </div>
-        {{ end }}
+        {{- range site.Menus.feeds }}
+            <a class="sidebar-nav-item" href="{{ .URL }}" data-feed-type="{{ .Identifier }}">
+                {{- print .Name | safeHTML -}}
+            </a>
+        {{- end }}
     </nav>
 
     {{ partial "footer" . }}
