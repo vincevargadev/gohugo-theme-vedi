@@ -1050,13 +1050,23 @@ pre {
   white-space: pre-wrap;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: var(--color-bg-secondary);
+  background-color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  pre {
+    background-color: #0d1117;
+  }
 }
 pre code {
   padding: 0;
   font-size: 100%;
-  color: #1a1a1a;
+  color: #1f2328;
   background-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+  pre code {
+    color: #e6edf3;
+  }
 }
 
 /* Pygments via Hugo */
