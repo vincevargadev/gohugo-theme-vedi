@@ -747,42 +747,6 @@ u,
 }
 
 
-/*
-  Line layouts for prose-poetry and theater
-
-  To use these layouts you need to add the classes to your markdown or HTML lines.
-*/
-
-li.speaker,
-li.speakerGroup {
-  text-align: center;
-  padding-top: 1.2em;
-}
-
-li.speakerGroup {
-  margin-bottom: -1.6em;
-}
-
-/* To add an attribution, make sure to make a line with the attribution class */
-
-li.attribution {
-  text-align: right;
-  list-style: none;
-  padding: 0rem 1.5rem 0rem 2rem;
-  margin: 0 0 20px 0;
-  color: #454545;
-}
-
-li.prose {
-  list-style-position: inside;
-  margin-left: -1em;
-  text-indent: 0;
-}
-
-li.prose-indent {
-  text-indent: 2rem;
-}
-
 .sidebar {
   background-color: var(--color-bg-secondary);
 }
