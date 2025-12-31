@@ -13,15 +13,6 @@
 [latest_publications]
   other = 'Latest publications'
 
-[your_name]
-  other = 'Your name'
-
-[email_address]
-  other = 'Email address'
-
-[message]
-  other = 'Message'
-
 [edited_by]
   other = 'Edited by {{ . }}'
 
@@ -36,9 +27,6 @@
 
 [by]
   other = 'by {{ . }}'
-
-[send]
-  other = 'Send'
 
 [all_publications]
   other = 'All publications'

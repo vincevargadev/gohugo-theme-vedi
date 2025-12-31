@@ -1,40 +1,64 @@
-// Are these still used?
-$main-font: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-$heading-font: sans-serif;
-$regular-font-size: 1.25em; /* 20px / 16px = 1.25em; support text resizing in all browsers */
-$text-light-color: #676767;
-$text-color: #454545;
-$heading-color: #404040;
-$link-color: #841212;
+:root {
+  /* Typography */
+  --font-body: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  --font-heading: sans-serif;
+  --font-size-base: 1.25em; /* 20px / 16px = 1.25em */
 
-// - - - - - - - - - - - - - - - - - -
-// Mixins
-// - - - - - - - - - - - - - - - - - -
+  /* Colors - Light theme */
+  --color-bg: #fff;
+  --color-bg-secondary: #f9f9f9;
+  --color-bg-code: #f9f9f9;
+  --color-bg-sidebar: #202020;
+  --color-bg-sidebar-toggle: #555;
+  --color-bg-sidebar-toggle-active: #555;
 
-// iPhone min device width cheat sheet:
-//
-// iPhone 4 and 4S: 320px
-// iPhone 5, 5S, 5C and 5SE: 320px
-// iPhone 6, 6S, 7 and 8: 375px
-// iPhone 6+, 7+ and 8+: 414px
-// iPhone X: 375px
-$break-phonem: 320px;
-$break-phonel: 480px;
+  --color-text: #454545;
+  --color-text-muted: #676767;
+  --color-text-heading: #404040;
+  --color-text-sidebar: #313131;
+
+  --color-link: #841212;
+  --color-link-sidebar: #9b0001;
+
+  --color-border: #eee;
+  --color-border-light: #e5e5e5;
+  --color-border-sidebar: #d6d6d6;
+
+  --color-accent: #ac4142;
+  --color-error: #D64541;
+  --color-success: #288828;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Colors - Dark theme */
+    --color-bg: #030303;
+    --color-bg-secondary: #1e1e1e;
+    --color-bg-code: #1e1e1e;
+    --color-bg-sidebar: rgba(0, 0, 0, 0.5);
+    --color-bg-sidebar-toggle: #592424;
+    --color-bg-sidebar-toggle-active: #a73031;
+
+    --color-text: #dcdcdc;
+    --color-text-muted: #ededed;
+    --color-text-heading: #f8f8f8;
+    --color-text-sidebar: #ececec;
+
+    --color-link: #ec494b;
+    --color-link-sidebar: #ff4142;
+
+    --color-border: #2c2c2c;
+    --color-border-light: #2c2c2c;
+    --color-border-sidebar: #2c2c2c;
+  }
+}
+
 $break-tabletp: 768px;
 $break-tabletl: 1024px;
 $break-laptop: 1220px;
-$break-desktop: 1600px;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Responsive
-// Usage: @include mq(tabletp) {}
 @mixin mq($media) {
-  @if $media == phonem {
-    @media only screen and (min-width: $break-phonem) { @content; }
-  }
-  @else if $media == phonel {
-    @media only screen and (min-width: $break-phonel) { @content; }
-  }
-  @else if $media == tabletp {
+  @if $media == tabletp {
     @media only screen and (min-width: $break-tabletp) { @content; }
   }
   @else if $media == tabletl {
@@ -43,66 +67,10 @@ $break-desktop: 1600px;
   @else if $media == laptop {
     @media only screen and (min-width: $break-laptop) { @content; }
   }
-  @else if $media == desktop {
-    @media only screen and (min-width: $break-desktop) { @content; }
-  }
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  text-size-adjust
-// Controls the text inflation algorithm used on some smartphones and tablets.
-// Other browsers will ignore this property.
-//
-// Usage: @include text-size-adjust(none);
 
-@mixin text-size-adjust($value) {
-  -webkit-text-size-adjust: $value;
-     -moz-text-size-adjust: $value;
-      -ms-text-size-adjust: $value;
-          text-size-adjust: $value;
-}
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Transform
-// Usage: @include transform(
-//             rotate(90deg),
-//             scale(0.5),
-//             // ... add more transforms if you need
-//        );
-//
-
-@mixin transform($transforms...) {
-  // combine the passed transforms into a space separated list
-  $transform-list: join($transforms, null, space);
-
-  // print out the transforms
-  -webkit-transform: $transform-list;
-     -moz-transform: $transform-list;
-      -ms-transform: $transform-list;
-       -o-transform: $transform-list;
-          transform: $transform-list;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Transitions
-// Usage: @include transition(color .3s ease);
-
-@mixin transition($args...) {
-  -webkit-transition: $args;
-     -moz-transition: $args;
-      -ms-transition: $args;
-       -o-transition: $args;
-          transition: $args;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Appearance
-// Used to display an element using platform-native styling based
-// on the operating system's theme.
-//
-// Usage: @include appearance(button);
-
-@mixin appearance($value) {
-  -webkit-appearance: $value;
-     -moz-appearance: $value;
-          appearance: $value;
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Placeholder
 // Style the placeholder text of a form element.
@@ -127,90 +95,6 @@ $break-desktop: 1600px;
   }
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Box Sizing
-// Sets how the total width and height of an element is calculated.
-//
-// Usage: @include box-sizing(border-box);
-
-@mixin box-sizing ($value) {
-  -webkit-box-sizing: $value;
-     -moz-box-sizing: $value;
-          box-sizing: $value;
-}
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Box Shadow
-//
-// Usage: @include box-shadow(0 0 2px 1px #e21a23!important);
-
-@mixin box-shadow ($args...) {
-  -webkit-box-shadow: $args;
-     -moz-box-shadow: $args;
-          box-shadow: $args;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Border Radius
-//
-// Usage: @include border-radius(10% 30% 50% 70%);
-
-@mixin border-radius ($args...) {
-  -webkit-border-radius: $args;
-     -moz-border-radius: $args;
-          border-radius: $args;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Flex Wrap
-// Sets whether flex items are forced onto one line or can wrap onto
-// multiple lines.
-//
-// Usage: @include flex-wrap(wrap);
-
-@mixin flex-wrap ($value) {
-  -webkit-flex-wrap: $value;
-      -ms-flex-wrap: $value;
-          flex-wrap: $value;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - Box Decoration Break
-// Specifies how an element's fragments should be rendered when broken across
-// multiple lines, columns, or pages.
-//
-// Usage: @include box-decoration-break(clone);
-
-@mixin box-decoration-break ($value) {
-  -webkit-box-decoration-break: $value;
-      -ms-box-decoration-break: $value;
-          box-decoration-break: $value;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Mask
-
-
-// Usage: @include mask-image(url("/img/external-link.svg"));
-
-@mixin mask-image($value) {
-  -webkit-mask-image: $value;
-          mask-image: $value;
-}
-
-// Usage: @include mask-size(cover);
-
-@mixin mask-size($value) {
-  -webkit-mask-size: $value;
-          mask-size: $value;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Filter
-// Applies graphical effects like blur or color shift to an element.
-//
-// Usage: @include filter(drop-shadow(0 2px 5px rgba(0, 0, 0, .3)));
-
-@mixin filter($value) {
-  -webkit-filter: $value;
-     -moz-filter: $value;
-       -o-filter: $value;
-          filter: $value;
-}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - clip-path
 // Create a clipping region that sets what part of an element should be shown.
@@ -262,7 +146,7 @@ $break-desktop: 1600px;
 
 
 * {
-  @include box-sizing(border-box);
+  box-sizing: border-box;
 }
 
 html,
@@ -273,21 +157,22 @@ body {
 }
 
 html {
-  font-family: $main-font;
+  font-family: var(--font-body);
   font-size: 1em; /* 16px; specify in ems to support text resizing in all browsers */
   line-height: 1.5;
 }
 
 @media (min-width: 38em) {
   html {
-    font-size: $regular-font-size;
+    font-size: var(--font-size-base);
   }
 }
 
 body {
-  color: $text-color;
-  background-color: #fff;
-  @include text-size-adjust(100%);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 .content {
@@ -314,7 +199,7 @@ body {
 }
 
 a, .text-title a {
-  color: $link-color;
+  color: var(--color-link);
   text-decoration: none;
 }
 
@@ -324,10 +209,10 @@ a:focus {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $heading-font;
+  font-family: var(--font-heading);
   margin-bottom: .5rem;
   font-weight: normal;
-  color: $heading-color;
+  color: var(--color-text-heading);
   letter-spacing: -.025rem;
   line-height: 1.25;
   text-rendering: optimizeLegibility;
@@ -370,19 +255,19 @@ hr {
   position: relative;
   margin: 1.5rem 0;
   border: 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-border);
   border-bottom: 1px solid #fff;
 }
 
 mark {
   color: white;
-  background-color: $link-color;
+  background-color: var(--color-link);
 }
 
 blockquote {
   padding: 0rem 1.5rem 0rem 2rem;
   margin: 0 0 20px 0;
-  color: $text-color;
+  color: var(--color-text);
   border-left: none;
   font-style: italic;
 }
@@ -408,23 +293,23 @@ img {
 table {
   margin-bottom: 1rem;
   width: 100%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border-light);
   border-collapse: collapse;
 }
 
 td,
 th {
   padding: .25rem .5rem;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border-light);
 }
 
 tbody tr:nth-child(odd) td,
 tbody tr:nth-child(odd) th {
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-secondary);
 }
 
 .masthead {
-  border-bottom: 0.5px solid #eee;
+  border-bottom: 0.5px solid var(--color-border);
   padding-top: calc(20px + env(safe-area-inset-top));
   padding-bottom: 8px;
   text-align: center;
@@ -442,7 +327,7 @@ main#main {
 
 .masthead-title {
   color: #505050;
-  font-family: $main-font;
+  font-family: var(--font-body);
   font-size: 1.8rem;
   line-height: .777em;
   margin: 2em 0 0;
@@ -459,13 +344,13 @@ main#main {
   border-radius: 50%;
   margin-right: 14px;
   opacity: 1;
-  @include transition(opacity .15s ease-in-out);
+  transition: opacity .15s ease-in-out;
 }
 
 .masthead-title small {
-  color: $text-color;
+  color: var(--color-text);
   display: none; /* This is an accessibility no-no */
-  font-family: $heading-font;
+  font-family: var(--font-heading);
   font-size: .88rem;
   font-weight: normal;
   letter-spacing: .05rem;
@@ -506,10 +391,10 @@ main#main {
   overflow-y: auto;
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
   font-size: .875rem;/* 15px*/
-  color: #313131;
-  border-right: .5px solid #d6d6d6;
-  background-color: #202020;
-  @include transition(all .15s ease-in-out);
+  color: var(--color-text-sidebar);
+  border-right: .5px solid var(--color-border-sidebar);
+  background-color: var(--color-bg-sidebar);
+  transition: all .15s ease-in-out;
   padding-top: env(safe-area-inset-top);
   display: flex;
   flex-direction: column;
@@ -532,12 +417,12 @@ main#main {
 }
 
 .sidebar {
-  background-color: $link-color;
+  background-color: var(--color-link);
 }
 
 .sidebar a {
   font-weight: 600;
-  color: #9b0001;
+  color: var(--color-link-sidebar);
 }
 
 .sidebar-item {
@@ -608,7 +493,7 @@ a.sidebar-nav-item:focus {
   display: block;
   padding: .25rem .75rem;
   color: #505050;
-  background-color: #fff;
+  background-color: var(--color-bg);
   border-radius: .25rem;
   cursor: pointer;
   position: fixed;
@@ -634,7 +519,7 @@ a.sidebar-nav-item:focus {
 #sidebar-checkbox:focus ~ .sidebar-toggle,
 #sidebar-checkbox:checked ~ .sidebar-toggle {
   color: #fff;
-  background-color: #555;
+  background-color: var(--color-bg-sidebar-toggle-active);
 }
 
 .sidebar-toggle:active:before,
@@ -676,7 +561,7 @@ a.sidebar-nav-item:focus {
 }
 
 #sidebar-checkbox:checked ~ .sidebar {
-  @include transform(translateX(16rem));
+  transform: translateX(16rem);
 }
 
 #sidebar-checkbox:checked ~ .wrap .masthead-title img {
@@ -684,11 +569,11 @@ a.sidebar-nav-item:focus {
 }
 
 .layout-reverse #sidebar-checkbox:checked ~ .sidebar {
-  @include transform(translateX(-16rem));
+  transform: translateX(-16rem);
 }
 
 .sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
-  @include transform(translateX(0));
+  transform: translateX(0);
 }
 
 .sidebar-overlay #sidebar-checkbox:checked ~ .sidebar-toggle {
@@ -846,7 +731,7 @@ ol.bibliography {
 
 ins,
 .add {
-  color:#288828;
+  color: var(--color-success);
   font-style: italic;
 }
 
@@ -899,24 +784,24 @@ li.prose-indent {
 }
 
 .sidebar {
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-secondary);
 }
 
 .sidebar-toggle:active,
 #sidebar-checkbox:checked ~ .sidebar-toggle {
-  background-color: #ac4142;
+  background-color: var(--color-accent);
 }
 
 .post-meta {
   margin-bottom: 0;
   font-size: .85rem;
-  color: $text-light-color;
+  color: var(--color-text-muted);
 }
 
 .container a,
 .sidebar-toggle,
 .related-posts li a:hover {
-  color: #ac4142;
+  color: var(--color-accent);
 }
 
 .masthead-title a {
@@ -930,70 +815,21 @@ li.prose-indent {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    background-color: #030303;
+  html, body {
     color-scheme: dark;
-  }
-
-  body {
-    color: #dcdcdc;
-    background-color: #030303;
-    color-scheme: dark;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    color: #f8f8f8;
-  }
-
-  .post-meta {
-    color: #ededed;
-  }
-
-  .masthead-title small {
-    color: #ffffff;
-  }
-
-  .masthead-title a:hover {
-    text-decoration: none;
-  }
-
-  .masthead {
-    border-bottom: .5px solid #2c2c2c;
-  }
-
-  .sidebar {
-    background: rgba(0, 0, 0, 0.5);
-    color: #ececec;
-    border-right: .5px solid #2c2c2c;
-  }
-
-  .container a, .sidebar-toggle, .related-posts li a:hover {
-    color: #ec494b;
   }
 
   .sidebar a {
-    color: #ff4142;
     font-weight: 400;
   }
 
-  .sidebar-toggle:active, #sidebar-checkbox:checked~.sidebar-toggle {
-    background-color: #a73031;
-  }
-
-  .sidebar-toggle {
-    background-color: #592424;
-  }
-
   .sidebar-toggle:before {
+    /* Inverted hamburger icon for dark mode */
     background-image: linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
     z-index: 300;
   }
 
-  pre.chroma, pre, code {
-    background-color: #1e1e1e !important;
-  }
-
-  // Mermaid diagrams only work with light background...
+  /* Mermaid diagrams only work with light background */
   pre.mermaid {
     background-color: #f9f9f9 !important;
   }
@@ -1152,7 +988,7 @@ ul.pager {
   text-indent: unset;
 
   li, a {
-    font-family: $heading-font;
+    font-family: var(--font-heading);
     float: left;
     height: 24px;
     line-height: 24px;
@@ -1163,11 +999,11 @@ ul.pager {
   a {
     margin-left: 20px;
     padding: 0 10px 0 12px;
-    background: $link-color;
+    background: var(--color-link);
     color: #fff;
     text-decoration: none;
 
-    @include border-radius(0 4px 4px 0);
+    border-radius: 0 4px 4px 0;
 
     &:before {
       content: "";
@@ -1177,7 +1013,7 @@ ul.pager {
       left: -12px;
       width: 0;
       height: 0;
-      border-color: transparent $link-color transparent transparent;
+      border-color: transparent var(--color-link) transparent transparent;
       border-style: solid;
       border-width: 12px 12px 12px 0;
     }
@@ -1192,31 +1028,33 @@ ul.pager {
       height: 4px;
       background: #fff;
 
-      @include border-radius(2px);
-      @include box-shadow(-1px -1px 2px $text-color);
+      border-radius: 2px;
+      box-shadow: -1px -1px 2px var(--color-text);
     }
 
     &:hover {
-      background: $text-light-color;
+      background: var(--color-text-muted);
     }
 
     &:hover:before {
-      border-color: transparent $text-light-color transparent transparent;
+      border-color: transparent var(--color-text-muted) transparent transparent;
     }
   }
 }
 
 a.external {
   &:after {
-    background-color: #ac4142;
+    background-color: var(--color-accent);
     content: "";
     display: inline-flex;
     height: 10px;
     margin-left: 4px;
     width: 10px;
 
-    @include mask-size(cover);
-    @include mask-image(url("/img/external-link.svg"));
+    -webkit-mask-size: cover;
+            mask-size: cover;
+    -webkit-mask-image: url("/img/external-link.svg");
+            mask-image: url("/img/external-link.svg");
   }
 }
 
@@ -1239,7 +1077,7 @@ ul.tags-cloud {
 
   .tag-link {
     padding: 5px 5px 0;
-    @include transition(0.15s);
+    transition: 0.15s;
   }
 }
 
@@ -1266,14 +1104,14 @@ ul.tags-cloud {
   right: 1.5rem;
   z-index: 99;
 
-  @include transition(.15s);
+  transition: .15s;
 
   &:hover {
     text-decoration: none;
   }
 
   svg {
-    @include filter(drop-shadow(0 2px 5px rgba(0, 0, 0, .3)));
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3));
   }
 }
 
@@ -1288,9 +1126,9 @@ ul.tags-cloud {
 
 
 .post-tags a {
-  background: #ac4142;
+  background: var(--color-accent);
   &:before {
-    border-color: transparent #ac4142 transparent transparent;
+    border-color: transparent var(--color-accent) transparent transparent;
   }
 }
 
@@ -1316,7 +1154,7 @@ code {
   padding: .25em .5em;
   font-size: 85%;
   color: #bf616a;
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-secondary);
   border-radius: 3px;
 }
 pre {
@@ -1330,7 +1168,7 @@ pre {
   white-space: pre-wrap;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-secondary);
 }
 pre code {
   padding: 0;
@@ -1354,12 +1192,12 @@ pre code {
   font-family: inherit;
   font-size: 1.25em;
   color: #000;
-  background-color: #fff;
+  background-color: var(--color-bg);
   width: 100%;
   padding: 0.5em;
 
-  @include transition(all 0.15s ease-in-out);
-  @include appearance(none);
+  transition: all 0.15s ease-in-out;
+  appearance: none;
 
   @include mq(tabletp) {
     font-size: 1.15em;
@@ -1370,30 +1208,9 @@ pre code {
   }
 
   &:focus {
-    @include box-shadow(none);
+    box-shadow: none;
     outline: none;
     border-color: #5e5e5e;
-  }
-}
-
-#site-contact {
-  width: 100%;
-  padding-bottom: 20px;
-
-  @include mq(tabletp) {
-    padding-bottom: 40px;
-  }
-
-  @include mq(laptop) {
-    padding-bottom: 50px;
-  }
-
-  @include mq(desktop) {
-    padding-bottom: 60px;
-  }
-
-  &:first-child {
-    margin-top: 0;
   }
 }
 
@@ -1413,57 +1230,14 @@ pre code {
   }
 }
 
-form input[type="number"]:-moz-submit-invalid,
-form input[type="email"]:-moz-submit-invalid,
-form textarea:-moz-submit-invalid,
-form input[type="text"]:-moz-submit-invalid,
-form select:-moz-submit-invalid,
-form input:-moz-ui-invalid {
-  @include box-shadow(0 0 2px 1px #D64541!important);
-}
-
 .form-item-error {
   .form-input,
   .form-textarea {
-    @include box-shadow(0 0 2px 1px #D64541!important);
+    box-shadow: 0 0 2px 1px var(--color-error) !important;
   }
-}
-
-.form-label {
-  display: block;
-  font-size: 16px;
-  font-weight: 600;
-  color: #676767;
-
-  @include mq(tabletp) {
-    font-size: 18px;
-  }
-
-  @include mq(laptop) {
-    font-size: 20px;
-  }
-}
-
-.contact-form-input,
-.contact-form-textarea {
-  margin-top: 8px;
 }
 
 @include input-placeholder(#ABB7B7, 15%);
-
-.contact-form-textarea {
-  font-size: 1.1em;
-  min-height: 200px;
-  resize: none;
-
-  @include mq(tabletp) {
-    font-size: 1.05em;
-  }
-
-  @include mq(laptop) {
-    font-size: 1em;
-  }
-}
 
 .button {
   display: inline-block;
@@ -1522,6 +1296,6 @@ form input:-moz-ui-invalid {
 
 .search-error,
 .search-error-message {
-  @include transition(all .5s ease-out);
+  transition: all .5s ease-out;
 }
 
